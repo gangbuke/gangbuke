@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>강북이 | 8월 1주차 시상 가이드</title>
+<meta name="description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
+
+<!-- ===================== Open Graph (카카오톡 등 링크 공유 미리보기용) =====================
+     아래 og:url, og:image는 GitHub Pages 주소가 확정된 뒤 실제 주소로 바꿔주세요.
+     예) https://<깃허브아이디>.github.io/<저장소이름>/
+     저장소 루트에 이 파일과 thumbnail.png를 그대로 올렸다면
+     og:image는 https://<깃허브아이디>.github.io/<저장소이름>/thumbnail.png 가 됩니다. -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="강북이 | 8월 1주차 시상 가이드" />
+<meta property="og:description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
+<meta property="og:image" content="https://REPLACE-WITH-YOUR-GITHUB-PAGES-URL/thumbnail.png" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
+<meta property="og:image:width" content="1731" />
+<meta property="og:image:height" content="909" />
+<meta property="og:url" content="https://REPLACE-WITH-YOUR-GITHUB-PAGES-URL/" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
+<!-- ============================================================================== -->
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="강북이 | 8월 1주차 시상 가이드" />
+<meta name="twitter:description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
+<meta name="twitter:image" content="https://REPLACE-WITH-YOUR-GITHUB-PAGES-URL/thumbnail.png" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2217%22 y=%2214%22 width=%2222%22 height=%2272%22 rx=%2211%22 fill=%22%23FF7A29%22/><rect x=%2261%22 y=%2214%22 width=%2222%22 height=%2272%22 rx=%2211%22 fill=%22%23FF7A29%22/><rect x=%2217%22 y=%2241%22 width=%2266%22 height=%2220%22 rx=%2210%22 fill=%22%23FF7A29%22/></svg>" />
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: #FFF8F0; min-height: 100vh; }
+  #root { min-height: 100vh; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const { useState, useMemo } = React;
+
+/* =========================================================================
+   강북이 — 강북지역단 8월 1주차 시상 가이드
+   ========================================================================= */
+
+/* ------------------------------------------------------------------ DATA
+   Note: no full planner registry here on purpose. The name is entered
+   directly by the user, and the code is used ONLY to check bridge-award
+   eligibility against these two lists (codes only, no names attached). */
+const HIGHCAP_JULY = {"1A7906":300000,"191193":300000,"134939":300000,"9A6234":300000,"194472":300000,"9A1763":300000,"1A7501":300000,"1D8346":300000,"1D5535":300000,"1C3857":300000,"973027":300000,"961350":300000,"958643":300000,"082728":300000,"1D8881":300000,"9A7084":300000,"1C5435":300000,"950420":300000,"812400":300000,"980803":300000,"1D7129":300000,"148001":300000,"042821":300000,"961939":300000,"1C9140":300000,"1A0219":300000,"190250":300000,"985932":300000,"1A2077":300000,"970099":300000,"970680":300000,"977729":300000,"1D8693":300000,"134696":300000,"1D8714":300000,"1C2869":300000,"101650":300000,"1B9404":300000,"1C8244":200000,"1B9235":200000,"1D6509":200000,"1B9506":200000,"1B2831":200000,"928060":200000,"9A2578":200000,"111435":200000,"147775":200000,"1A6444":200000,"950830":200000,"1B5914":200000,"1D8680":200000,"000008":200000,"960964":200000,"146376":200000,"1C8705":200000,"1D9029":200000,"933170":200000,"1D9068":200000,"1D4485":200000,"1D9097":200000,"1D2532":200000,"1D3227":200000,"1A6442":200000,"1D3460":200000,"954853":200000,"1C7798":200000,"110862":200000,"1A0001":200000,"833260":200000,"060147":200000,"9A6233":200000,"988387":200000,"1D8713":200000,"972571":200000,"888620":200000,"195519":200000,"971503":200000,"123922":200000,"952159":200000,"142608":200000,"108631":200000,"1A0324":200000,"157167":200000,"155102":100000,"961477":100000,"1C4712":100000,"057895":100000,"1D5679":100000,"1C6120":100000,"1C4186":100000,"971984":100000,"983849":100000,"140436":100000,"1B7018":100000,"1C8106":100000,"1D6554":100000,"9A1454":100000,"1D3917":100000,"1B8255":100000,"1C8346":100000,"1D2682":100000,"960106":100000,"1C7925":100000,"831930":100000,"1D8658":100000,"1D9053":100000,"977302":100000,"1D8553":100000,"1C0354":100000,"1A1986":100000,"1D5655":100000,"1D3092":100000,"1B6870":100000,"133755":100000,"1D8184":100000,"971919":100000,"1D7920":100000,"1D8990":100000,"145688":100000,"1C8883":100000,"1B5011":100000,"1D7232":100000,"1D3572":100000,"790130":100000,"198931":100000,"9A1686":100000,"1A9104":100000,"1C9360":100000,"1C0703":100000,"964622":100000,"1A1798":100000,"075682":100000,"1C1425":100000,"1C7548":100000,"986778":100000,"911670":100000,"834920":100000,"1D8472":100000,"922290":100000,"1C5828":100000,"970906":100000,"1D7913":100000,"1D6794":100000,"138814":100000,"1B0426":100000,"957417":100000,"152043":100000,"1D2681":100000,"966001":100000,"1A8720":100000,"158988":100000,"1C4995":100000,"1D8306":100000,"951272":100000,"1D7741":100000,"076134":100000,"1C6067":100000,"1C6118":100000,"933690":100000,"198176":100000,"1D7819":100000,"1D7546":100000,"1D0546":100000,"196605":100000,"981626":100000,"1D1782":100000,"952581":100000,"1C7504":100000,"027686":100000,"1D0809":100000,"197476":100000,"1B0912":100000,"139888":100000,"105122":100000,"1A0306":100000,"961147":100000,"965706":100000,"154870":100000,"981468":100000,"737400":100000,"138167":100000,"963802":100000,"1D8028":100000,"1B8736":100000,"042469":100000,"1D8687":100000,"1D6977":100000,"968469":100000,"1D2078":100000,"153029":100000,"965255":100000,"1C3254":100000,"962176":100000,"1A9865":100000,"138961":100000,"943575":100000,"135559":100000,"1C9656":100000,"1A3737":100000,"954848":100000}; // code -> july tier (100000/200000/300000)
+const MAINPROD_JULY = new Set(["042821","056812","057895","060147","069563","082728","105122","127758","134696","134939","138814","138961","148001","152043","153029","157167","190250","191193","191202","194005","194472","196005","197476","1A0001","1A0219","1A0306","1A1798","1A6442","1A7906","1A8720","1B0426","1B0912","1B2571","1B6870","1B7018","1B7338","1B9506","1C0354","1C1425","1C3254","1C3857","1C4186","1C4712","1C5828","1C6067","1C6120","1C7148","1C7504","1C7798","1C8244","1C8346","1C8705","1C8877","1C9140","1C9360","1C9656","1D0546","1D0784","1D0809","1D1782","1D2078","1D2682","1D3092","1D3227","1D3460","1D3545","1D3572","1D4123","1D4124","1D4255","1D4485","1D5258","1D5656","1D6103","1D6509","1D6554","1D6794","1D6977","1D7113","1D7504","1D7546","1D7913","1D7934","1D7954","1D8028","1D8184","1D8237","1D8553","1D8589","1D8658","1D8680","1D8693","1D8714","1D9026","1D9029","1D9053","1D9097","737400","790130","812400","831930","833260","885980","922290","928060","935430","940430","943575","948751","950830","951023","954853","957417","960964","961147","961939","962176","963499","964120","965255","965706","968469","970099","970680","971503","971919","971984","972571","977302","980803","981468","983849","9A1454","9A1763","9A1764","9A6233","9A6234","9A8321"]); // codes achieved july main-product bridge
+
+/* ------------------------------------------------------------ AWARD CONFIG
+   Keep every rule here so week 2 / week 3 rules can swap in later without
+   touching calculation or UI logic.                                       */
+const AWARD_CONFIG = {
+  tiers: [500000, 400000, 300000, 200000, 100000], // highest first
+  smallTier: 50000,
+  vacationRate: 0.7,
+  basicBonusRate: 1.3,
+  earlyBonusDates: ["8/3", "8/4", "8/5"],
+  lateDates: ["8/6", "8/7"],
+  dateOptions: ["8/3", "8/4", "8/5", "8/6", "8/7"],
+  highcapBridgeAmounts: { 100000: 500000, 200000: 1000000, 300000: 1500000 },
+  highcapAugustMin: 100000,
+  mainProductBridgeAmount: 240000,
+  mainProductAugustMin: 100000,
+};
+
+const TIER_LIST_ASC = [100000, 200000, 300000, 400000, 500000];
+const MAX_TIER = 500000;
+
+/* --------------------------------------------------------- PURE HELPERS */
+function getHighestTier(perf) {
+  for (const t of AWARD_CONFIG.tiers) {
+    if (perf >= t) return t;
+  }
+  return null;
+}
+
+function manwon(amountWon) {
+  return Math.round(amountWon / 10000) + "만원";
+}
+
+// used only when displaying a projected *gain* — never show a misleading negative "increase"
+function manwonGain(amountWon) {
+  return manwon(Math.max(0, amountWon));
+}
+
+function won(amountWon) {
+  return amountWon.toLocaleString("ko-KR") + "원";
+}
+
+/* ---------------------------------------------------------- CALCULATORS */
+function calculateVacationAward(perf) {
+  const tier = getHighestTier(perf);
+  if (!tier) return { tier: null, amount: 0 };
+  return { tier, amount: Math.round(tier * AWARD_CONFIG.vacationRate) };
+}
+
+function calculateBasicAward(perf, tierDate) {
+  if (perf < AWARD_CONFIG.smallTier) {
+    return { tier: null, amount: 0, bonusApplied: false };
+  }
+  if (perf < 100000) {
+    return { tier: AWARD_CONFIG.smallTier, amount: AWARD_CONFIG.smallTier, bonusApplied: false };
+  }
+  const tier = getHighestTier(perf);
+  const bonusApplied = AWARD_CONFIG.earlyBonusDates.includes(tierDate);
+  const amount = bonusApplied ? Math.round(tier * AWARD_CONFIG.basicBonusRate) : tier;
+  return { tier, amount, bonusApplied };
+}
+
+function calculateHighcapBridge(julyTier, perf) {
+  if (!julyTier) return { eligible: false, achieved: false, amount: 0, gap: 0, julyTier: null };
+  const amount = AWARD_CONFIG.highcapBridgeAmounts[julyTier] || 0;
+  const achieved = perf >= AWARD_CONFIG.highcapAugustMin;
+  const gap = achieved ? 0 : AWARD_CONFIG.highcapAugustMin - perf;
+  return { eligible: true, achieved, amount, gap, julyTier };
+}
+
+function calculateMainProductBridge(julyAchieved, perf) {
+  if (!julyAchieved) return { eligible: false, achieved: false, amount: 0, gap: 0 };
+  const amount = AWARD_CONFIG.mainProductBridgeAmount;
+  const achieved = perf >= AWARD_CONFIG.mainProductAugustMin;
+  const gap = achieved ? 0 : AWARD_CONFIG.mainProductAugustMin - perf;
+  return { eligible: true, achieved, amount, gap };
+}
+
+// today's real date relative to the fixed 2026-08-03 ~ 08-07 campaign window
+function getCampaignPhase() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const d3 = new Date(2026, 7, 3);
+  const d5 = new Date(2026, 7, 5);
+  const d7 = new Date(2026, 7, 7);
+  if (today < d3) return "before";
+  if (today <= d5) return "early";
+  if (today <= d7) return "late";
+  return "ended";
+}
+
+function projectAwardSplit(perf) {
+  const vacationAmount = calculateVacationAward(perf).amount;
+  let basicEarly = 0;
+  let basicLate = 0;
+  if (perf >= 100000) {
+    const tier = getHighestTier(perf);
+    basicEarly = Math.round(tier * AWARD_CONFIG.basicBonusRate);
+    basicLate = tier;
+  } else if (perf >= AWARD_CONFIG.smallTier) {
+    basicEarly = AWARD_CONFIG.smallTier;
+    basicLate = AWARD_CONFIG.smallTier;
+  }
+  return {
+    vacation: vacationAmount,
+    basicEarly,
+    basicLate,
+    totalEarly: vacationAmount + basicEarly,
+    totalLate: vacationAmount + basicLate,
+  };
+}
+
+function buildGoalStep(perf, tierDate, targetTier, currentTotal, currentVacation, currentBasic) {
+  const gap = targetTier - perf;
+  const proj = projectAwardSplit(targetTier);
+  return {
+    targetTier,
+    gap,
+    currentTotal,
+    totalEarly: proj.totalEarly,
+    totalLate: proj.totalLate,
+    deltaEarly: proj.totalEarly - currentTotal,
+    deltaLate: proj.totalLate - currentTotal,
+    vacationDelta: proj.vacation - currentVacation, // date-independent
+    basicDeltaEarly: proj.basicEarly - currentBasic,
+    basicDeltaLate: proj.basicLate - currentBasic,
+  };
+}
+
+function calculateNextGoals(perf, tierDate) {
+  const vac = calculateVacationAward(perf);
+  const basic = calculateBasicAward(perf, tierDate);
+  const currentTotal = vac.amount + basic.amount;
+
+  const atMax = perf >= MAX_TIER;
+
+  let nearest = null;
+  if (!atMax) {
+    const nextTier = TIER_LIST_ASC.find((t) => t > perf);
+    if (nextTier) {
+      nearest = buildGoalStep(perf, tierDate, nextTier, currentTotal, vac.amount, basic.amount);
+    }
+  }
+
+  let challenge = null;
+  if (!atMax) {
+    challenge = buildGoalStep(perf, tierDate, MAX_TIER, currentTotal, vac.amount, basic.amount);
+  }
+
+  return { currentTotal, nearest, challenge, atMax };
+}
+
+/* --------------------------------------------------------- ORCHESTRATOR */
+function computeAll(name, code, perf, tierDate) {
+  const julyTier = HIGHCAP_JULY[code] || null;
+  const mainAchievedJuly = MAINPROD_JULY.has(code);
+
+  const vacation = calculateVacationAward(perf);
+  const basic = calculateBasicAward(perf, tierDate);
+  const highcap = calculateHighcapBridge(julyTier, perf);
+  const mainProduct = calculateMainProductBridge(mainAchievedJuly, perf);
+  const campaignPhase = getCampaignPhase();
+  const goals = calculateNextGoals(perf, tierDate);
+
+  const securedTotal =
+    vacation.amount + basic.amount + (highcap.achieved ? highcap.amount : 0) + (mainProduct.achieved ? mainProduct.amount : 0);
+
+  const pendingBridgeTotal =
+    (highcap.eligible && !highcap.achieved ? highcap.amount : 0) + (mainProduct.eligible && !mainProduct.achieved ? mainProduct.amount : 0);
+
+  return {
+    name,
+    perf,
+    tierDate,
+    julyTier,
+    mainAchievedJuly,
+    vacation,
+    basic,
+    highcap,
+    mainProduct,
+    campaignPhase,
+    goals,
+    securedTotal,
+    pendingBridgeTotal,
+  };
+}
+
+/* =========================================================================
+   MASCOT — "강북이"
+   H-silhouette, rounded, orange. Pure SVG, no external assets.
+   ========================================================================= */
+function Kangbugi({ size = 64, mood = "default", badge = true, className = "" }) {
+  const happy = mood === "happy" || mood === "cheer";
+  const cheer = mood === "cheer";
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" className={className} aria-hidden="true">
+      {badge && <circle cx="50" cy="50" r="46" fill="var(--kb-orange-soft)" />}
+      {cheer && (
+        <g stroke="var(--kb-orange-mid)" strokeWidth="3" strokeLinecap="round" opacity="0.9">
+          <line x1="6" y1="16" x2="14" y2="23" />
+          <line x1="94" y1="16" x2="86" y2="23" />
+          <line x1="8" y1="50" x2="0" y2="50" />
+          <line x1="92" y1="50" x2="100" y2="50" />
+        </g>
+      )}
+      {/* tiny feet for personality */}
+      <ellipse cx="28" cy="87" rx="7.5" ry="4" fill="var(--kb-orange-dark)" opacity="0.16" />
+      <ellipse cx="72" cy="87" rx="7.5" ry="4" fill="var(--kb-orange-dark)" opacity="0.16" />
+      {/* H body */}
+      <rect x="17" y="14" width="22" height="72" rx="11" fill="var(--kb-orange)" />
+      <rect x="61" y="14" width="22" height="72" rx="11" fill="var(--kb-orange)" />
+      <rect x="17" y="41" width="66" height="20" rx="10" fill="var(--kb-orange)" />
+      {/* cheeks */}
+      <ellipse cx="34.5" cy="56.5" rx="5" ry="3.4" fill="#FFB199" opacity="0.65" />
+      <ellipse cx="65.5" cy="56.5" rx="5" ry="3.4" fill="#FFB199" opacity="0.65" />
+      {/* eyes */}
+      {happy ? (
+        <g stroke="var(--kb-ink)" strokeWidth="3.4" strokeLinecap="round" fill="none">
+          <path d="M 37 48 Q 40.5 43.5 44 48" />
+          <path d="M 56 48 Q 59.5 43.5 63 48" />
+        </g>
+      ) : (
+        <g>
+          <circle cx="40" cy="49" r="4.3" fill="var(--kb-ink)" />
+          <circle cx="41.4" cy="47.4" r="1.2" fill="#FFFFFF" />
+          <circle cx="60" cy="49" r="4.3" fill="var(--kb-ink)" />
+          <circle cx="61.4" cy="47.4" r="1.2" fill="#FFFFFF" />
+        </g>
+      )}
+      {/* mouth */}
+      {happy ? (
+        <path d="M 39 55 Q 50 64 61 55" stroke="var(--kb-ink)" strokeWidth="3.4" strokeLinecap="round" fill="none" />
+      ) : (
+        <path d="M 42 56 Q 50 60.5 58 56" stroke="var(--kb-ink)" strokeWidth="3" strokeLinecap="round" fill="none" />
+      )}
+    </svg>
+  );
+}
+
+/* =========================================================================
+   SMALL UI PRIMITIVES
+   ========================================================================= */
+function Chip({ children, tone = "default" }) {
+  return <span className={`kb-chip kb-chip--${tone}`}>{children}</span>;
+}
+
+function SpeechBubble({ children }) {
+  return (
+    <div className="kb-bubble">
+      <div className="kb-bubble__tail" />
+      {children}
+    </div>
+  );
+}
+
+/* Signature element — tier progress gauge showing the six 실적 구간 */
+function TierGauge({ perf }) {
+  const boundaries = [0, 50000, 100000, 200000, 300000, 400000, 500000];
+  const labels = ["0", "5만", "10만", "20만", "30만", "40만", "50만"];
+  const segments = [];
+  for (let i = 0; i < boundaries.length - 1; i++) {
+    const start = boundaries[i];
+    const end = boundaries[i + 1];
+    const fillFrac = Math.max(0, Math.min(1, (perf - start) / (end - start)));
+    segments.push({ start, end, fillFrac });
+  }
+  const overallPct = Math.max(0, Math.min(100, (Math.min(perf, MAX_TIER) / MAX_TIER) * 100));
+
+  return (
+    <div className="kb-gauge">
+      <div className="kb-gauge__track">
+        {segments.map((s, i) => (
+          <div className="kb-gauge__seg" key={i}>
+            <div className="kb-gauge__fill" style={{ width: s.fillFrac * 100 + "%" }} />
+          </div>
+        ))}
+        <div className="kb-gauge__marker" style={{ left: overallPct + "%" }}>
+          <Kangbugi size={26} mood={perf >= MAX_TIER ? "cheer" : "default"} />
+        </div>
+      </div>
+      <div className="kb-gauge__labels">
+        {labels.slice(1).map((l, i) => (
+          <span key={i}>{l}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* =========================================================================
+   INPUT SCREEN
+   ========================================================================= */
+function InputScreen({ name, setName, code, setCode, perfInput, setPerfInput, tierDate, setTierDate, onSubmit }) {
+  const perf = Number(perfInput.replace(/[^0-9]/g, "")) || 0;
+  const dateTier = perf >= 100000 ? getHighestTier(perf) : null;
+  const needsSmallNotice = perf >= AWARD_CONFIG.smallTier && perf < 100000;
+
+  function handlePerfChange(e) {
+    const raw = e.target.value.replace(/[^0-9]/g, "");
+    setPerfInput(raw);
+    const numeric = Number(raw) || 0;
+    if (numeric < 100000) setTierDate("");
+  }
+
+  function displayPerf() {
+    if (!perfInput) return "";
+    return Number(perfInput).toLocaleString("ko-KR");
+  }
+
+  const canSubmit = name.trim().length > 0 && code.trim().length > 0 && perf > 0 && (dateTier ? !!tierDate : true);
+
+  return (
+    <div className="kb-screen">
+      <div className="kb-hero">
+        <Kangbugi size={72} mood="happy" />
+        <h1 className="kb-title">강북이</h1>
+        <p className="kb-subtitle">강북지역단 8월 1주차 시상 가이드</p>
+      </div>
+
+      <div className="kb-card kb-form">
+        <label className="kb-field">
+          <span className="kb-field__label">① 이름</span>
+          <input
+            className="kb-input"
+            type="text"
+            inputMode="text"
+            placeholder="예) 김강북"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            autoComplete="off"
+          />
+        </label>
+
+        <label className="kb-field">
+          <span className="kb-field__label">② 플래너 코드 (브릿지 시상 확인용)</span>
+          <input
+            className="kb-input"
+            type="text"
+            inputMode="text"
+            placeholder="예) 1Z7777"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            autoComplete="off"
+          />
+        </label>
+
+        <label className="kb-field">
+          <span className="kb-field__label">③ 현재 인보험 실적</span>
+          <div className="kb-input-suffix-wrap">
+            <input
+              className="kb-input"
+              type="text"
+              inputMode="numeric"
+              placeholder="예) 380,000"
+              value={displayPerf()}
+              onChange={handlePerfChange}
+            />
+            <span className="kb-input-suffix">원</span>
+          </div>
+        </label>
+
+        {dateTier && (
+          <div className="kb-field">
+            <span className="kb-field__label">
+              ④ {manwon(dateTier)} 구간을 언제 달성하셨나요?
+            </span>
+            <div className="kb-date-grid">
+              {AWARD_CONFIG.dateOptions.map((d) => (
+                <button
+                  key={d}
+                  type="button"
+                  className={`kb-date-btn ${tierDate === d ? "kb-date-btn--active" : ""}`}
+                  onClick={() => setTierDate(d)}
+                >
+                  {d}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {needsSmallNotice && (
+          <p className="kb-hint">5만원 구간은 130% 조기달성 혜택이 적용되지 않아요.</p>
+        )}
+
+        <button className="kb-cta" disabled={!canSubmit} onClick={onSubmit}>
+          지금 바로 확인하기
+        </button>
+      </div>
+
+      <p className="kb-disclaimer">
+        ※ 강북이는 입력하신 실적과 시상 기준을 바탕으로 예상 금액을 안내하는 서비스입니다.
+        <br />
+        실제 시상금은 최종 실적 및 시상 기준 적용 결과에 따라 달라질 수 있습니다.
+      </p>
+    </div>
+  );
+}
+
+/* =========================================================================
+   RESULT SCREEN
+   ========================================================================= */
+const AWARD_ICON = {
+  vacation: "⛱️",
+  basic: "💰",
+  highcap: "🌉",
+  mainprod: "🎯",
+};
+
+function buildCoachMessage(result) {
+  const { name, goals, campaignPhase, securedTotal } = result;
+
+  if (goals.atMax) {
+    return {
+      main: `${name}님, 이번 주 최고 구간(50만원)을 달성하셨어요!`,
+      detail: `확보하신 시상금은 ${won(securedTotal)}이에요.`,
+    };
+  }
+
+  if (!goals.nearest) {
+    return { main: `${name}님, 브릿지 시상도 함께 챙겨보세요.`, detail: null };
+  }
+
+  const { gap, deltaEarly, deltaLate, targetTier } = goals.nearest;
+  const stillHasEarlyWindow = campaignPhase === "before" || campaignPhase === "early";
+
+  const main = `${name}님, ${manwon(targetTier)} 구간까지 ${won(gap)} 남았어요.`;
+  let detail;
+  if (stillHasEarlyWindow) {
+    detail = `8월 5일(수)까지 ${won(gap)}을 더 하셔서 ${manwonGain(deltaEarly)}을 얻어 가시는 걸 추천드려요.`;
+  } else if (campaignPhase === "late") {
+    detail = `8월 7일(금)까지 ${won(gap)}을 더 하셔서 ${manwonGain(deltaLate)}을 얻어 가시는 걸 추천드려요.`;
+  } else {
+    detail = "이번 주 시상 기간은 마감됐어요. 다음 주 시상도 곧 안내해드릴게요.";
+  }
+
+  return { main, detail };
+}
+
+function SectionTitle({ children }) {
+  return (
+    <p className="kb-section-title">
+      <span className="kb-section-title__bar" />
+      {children}
+    </p>
+  );
+}
+
+/* --------------------------------------------------- SHARE IMAGE (canvas) */
+function roundRectPath(ctx, x, y, w, h, r) {
+  const rr = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}
+
+function drawKangbugiOnCanvas(ctx, cx, cy, size) {
+  const s = size / 100;
+  ctx.save();
+  ctx.translate(cx - size / 2, cy - size / 2);
+  ctx.fillStyle = "#FFE8D6";
+  ctx.beginPath();
+  ctx.arc(50 * s, 50 * s, 46 * s, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "#FF7A29";
+  roundRectPath(ctx, 17 * s, 14 * s, 22 * s, 72 * s, 11 * s);
+  ctx.fill();
+  roundRectPath(ctx, 61 * s, 14 * s, 22 * s, 72 * s, 11 * s);
+  ctx.fill();
+  roundRectPath(ctx, 17 * s, 41 * s, 66 * s, 20 * s, 10 * s);
+  ctx.fill();
+  ctx.fillStyle = "rgba(255,177,153,0.65)";
+  ctx.beginPath();
+  ctx.ellipse(34.5 * s, 56.5 * s, 5 * s, 3.4 * s, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(65.5 * s, 56.5 * s, 5 * s, 3.4 * s, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "#2B2A28";
+  ctx.beginPath();
+  ctx.arc(40 * s, 49 * s, 4.3 * s, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(60 * s, 49 * s, 4.3 * s, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "#FFFFFF";
+  ctx.beginPath();
+  ctx.arc(41.4 * s, 47.4 * s, 1.2 * s, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(61.4 * s, 47.4 * s, 1.2 * s, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = "#2B2A28";
+  ctx.lineWidth = 3 * s;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(42 * s, 56 * s);
+  ctx.quadraticCurveTo(50 * s, 60.5 * s, 58 * s, 56 * s);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(" ");
+  let line = "";
+  let curY = y;
+  for (let i = 0; i < words.length; i++) {
+    const test = line + words[i] + " ";
+    if (ctx.measureText(test).width > maxWidth && line !== "") {
+      ctx.fillText(line.trim(), x, curY);
+      line = words[i] + " ";
+      curY += lineHeight;
+    } else {
+      line = test;
+    }
+  }
+  ctx.fillText(line.trim(), x, curY);
+  return curY;
+}
+
+async function generateShareImage(result) {
+  const { name, perf, securedTotal, vacation, basic, highcap, mainProduct, goals, campaignPhase } = result;
+  const items = [];
+  if (vacation.amount > 0) items.push({ label: "⛱️ 휴가비", amount: vacation.amount });
+  if (basic.amount > 0) items.push({ label: "💰 기본시상", amount: basic.amount });
+  if (highcap.achieved) items.push({ label: "🌉 고하이캡 브릿지", amount: highcap.amount, note: "내년 지급" });
+  if (mainProduct.achieved) items.push({ label: "🎯 주력상품 브릿지", amount: mainProduct.amount, note: "내년 지급" });
+
+  const bridgeMaxTotal = (highcap.eligible ? highcap.amount : 0) + (mainProduct.eligible ? mainProduct.amount : 0);
+  const stillHasEarlyWindow = campaignPhase === "before" || campaignPhase === "early";
+  const maxProj = !goals.atMax ? projectAwardSplit(MAX_TIER) : null;
+  const maxTotal = goals.atMax
+    ? securedTotal + (highcap.eligible && !highcap.achieved ? highcap.amount : 0) + (mainProduct.eligible && !mainProduct.achieved ? mainProduct.amount : 0)
+    : (stillHasEarlyWindow ? maxProj.totalEarly : maxProj.totalLate) + bridgeMaxTotal;
+  const maxDeadlineLabel = campaignPhase === "late" ? "8월 7일(금)" : "8월 5일(수)";
+  const gapToMax = goals.atMax ? 0 : MAX_TIER - perf;
+
+  try {
+    if (document.fonts) {
+      await Promise.all([
+        document.fonts.load('900 34px "Noto Sans KR"'),
+        document.fonts.load('800 16px "Noto Sans KR"'),
+        document.fonts.load('700 15px "Noto Sans KR"'),
+        document.fonts.load('500 10px "Noto Sans KR"'),
+      ]);
+    }
+  } catch (e) {
+    /* fall back to system font silently */
+  }
+
+  const W = 360;
+  const scale = 3;
+  const pad = 26;
+  const itemRowH = 34;
+  const listH = items.length ? items.length * itemRowH + 10 : 40;
+  const maxSectionH = goals.atMax ? 30 : 68;
+  const H = pad + 70 + 44 + 62 + 24 + listH + 20 + maxSectionH + 20 + 50 + pad;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = W * scale;
+  canvas.height = H * scale;
+  const ctx = canvas.getContext("2d");
+  ctx.scale(scale, scale);
+
+  ctx.fillStyle = "#FFF8F0";
+  ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = "#ECE7DF";
+  ctx.lineWidth = 1;
+  roundRectPath(ctx, 0.5, 0.5, W - 1, H - 1, 20);
+  ctx.stroke();
+
+  let y = pad;
+  drawKangbugiOnCanvas(ctx, pad + 22, y + 20, 46);
+  ctx.textAlign = "left";
+  ctx.textBaseline = "alphabetic";
+  ctx.fillStyle = "#C6501A";
+  ctx.font = "900 21px 'Noto Sans KR'";
+  ctx.fillText("강북이", pad + 52, y + 18);
+  ctx.fillStyle = "#8A8580";
+  ctx.font = "600 12px 'Noto Sans KR'";
+  ctx.fillText("강북지역단 8월 1주차 시상 가이드", pad + 52, y + 36);
+
+  y += 70;
+  ctx.fillStyle = "#2B2A28";
+  ctx.font = "700 15px 'Noto Sans KR'";
+  ctx.fillText(name + "님, 지금 확보하신 예상 시상금은", pad, y);
+
+  y += 44;
+  ctx.fillStyle = "#C6501A";
+  ctx.font = "900 32px 'Noto Sans KR'";
+  ctx.fillText(securedTotal.toLocaleString("ko-KR") + "원", pad, y);
+
+  y += 18;
+  ctx.strokeStyle = "#ECE7DF";
+  ctx.beginPath();
+  ctx.moveTo(pad, y);
+  ctx.lineTo(W - pad, y);
+  ctx.stroke();
+
+  y += 26;
+  if (items.length === 0) {
+    ctx.fillStyle = "#8A8580";
+    ctx.font = "600 14px 'Noto Sans KR'";
+    ctx.textAlign = "left";
+    ctx.fillText("아직 확보한 시상이 없어요", pad, y);
+    y += itemRowH;
+  } else {
+    items.forEach((it) => {
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#2B2A28";
+      ctx.font = "700 15px 'Noto Sans KR'";
+      ctx.fillText(it.label, pad, y);
+
+      ctx.textAlign = "right";
+      ctx.font = "800 15px 'Noto Sans KR'";
+      ctx.fillStyle = "#C6501A";
+      const amtText = Math.round(it.amount / 10000) + "만원";
+      ctx.fillText(amtText, W - pad, y);
+
+      if (it.note) {
+        const amtW = ctx.measureText(amtText).width;
+        ctx.font = "700 10px 'Noto Sans KR'";
+        ctx.fillStyle = "#8A8580";
+        ctx.fillText(it.note, W - pad - amtW - 10, y);
+      }
+      y += itemRowH;
+    });
+  }
+
+  y += 4;
+  ctx.strokeStyle = "#ECE7DF";
+  ctx.beginPath();
+  ctx.moveTo(pad, y);
+  ctx.lineTo(W - pad, y);
+  ctx.stroke();
+
+  y += 24;
+  ctx.textAlign = "left";
+  if (goals.atMax) {
+    ctx.fillStyle = "#4C8B5C";
+    ctx.font = "700 13px 'Noto Sans KR'";
+    ctx.fillText("이번 주 최고 구간(50만원)을 이미 달성하셨어요.", pad, y);
+    y += 24;
+  } else {
+    ctx.fillStyle = "#2B2A28";
+    ctx.font = "600 13px 'Noto Sans KR'";
+    ctx.fillText("50만원 구간까지 " + gapToMax.toLocaleString("ko-KR") + "원 남았어요.", pad, y);
+    y += 22;
+    ctx.fillStyle = "#C6501A";
+    ctx.font = "700 13px 'Noto Sans KR'";
+    ctx.fillText(maxDeadlineLabel + "까지 달성하면 최대 " + maxTotal.toLocaleString("ko-KR") + "원", pad, y);
+    y += 24;
+  }
+
+  y += 2;
+  ctx.strokeStyle = "#ECE7DF";
+  ctx.beginPath();
+  ctx.moveTo(pad, y);
+  ctx.lineTo(W - pad, y);
+  ctx.stroke();
+
+  y += 22;
+  ctx.fillStyle = "#B3AEA8";
+  ctx.font = "500 10px 'Noto Sans KR'";
+  ctx.textAlign = "left";
+  wrapCanvasText(
+    ctx,
+    "※ 강북이는 입력하신 실적과 시상 기준을 바탕으로 예상 금액을 안내하는 서비스입니다. 실제 시상금은 최종 실적 및 시상 기준 적용 결과에 따라 달라질 수 있습니다.",
+    pad,
+    y,
+    W - pad * 2,
+    14
+  );
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => resolve(blob), "image/png");
+  });
+}
+
+function ResultScreen({ result, onRecalculate }) {
+  const { name, perf, vacation, basic, highcap, mainProduct, goals, securedTotal, pendingBridgeTotal, campaignPhase } = result;
+  const [saving, setSaving] = useState(false);
+
+  const breakdownItems = [];
+  if (vacation.amount > 0) breakdownItems.push({ label: `${AWARD_ICON.vacation} 휴가비`, amount: vacation.amount });
+  if (basic.amount > 0) breakdownItems.push({ label: `${AWARD_ICON.basic} 기본시상`, amount: basic.amount });
+  if (highcap.achieved) breakdownItems.push({ label: `${AWARD_ICON.highcap} 고하이캡 브릿지`, amount: highcap.amount, note: "내년 지급" });
+  if (mainProduct.achieved) breakdownItems.push({ label: `${AWARD_ICON.mainprod} 주력상품 브릿지`, amount: mainProduct.amount, note: "내년 지급" });
+
+  const coach = buildCoachMessage(result);
+
+  // true grand-maximum this week: 50만원 구간 + (있다면) 130% + 자격 있는 브릿지 전부
+  const bridgeMaxTotal = (highcap.eligible ? highcap.amount : 0) + (mainProduct.eligible ? mainProduct.amount : 0);
+  const maxTierProjection = !goals.atMax ? projectAwardSplit(MAX_TIER) : null;
+
+  async function handleSaveImage() {
+    setSaving(true);
+    try {
+      const blob = await generateShareImage(result);
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `강북이_시상_${name}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    } catch (e) {
+      /* no-op: keep UI stable even if generation fails */
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="kb-screen">
+      {/* SECTION 1: Hero total (greeting + amount as one flow) */}
+      <div className="kb-card kb-hero-card">
+        <div className="kb-hero-card__top">
+          <Kangbugi size={36} mood="happy" />
+          <p className="kb-hero-card__label">
+            <strong>{name}</strong>님, 지금 확보하신 예상 시상금은
+          </p>
+        </div>
+        <p className="kb-hero-card__amount">{won(securedTotal)}</p>
+        {breakdownItems.length > 0 ? (
+          <ul className="kb-breakdown">
+            {breakdownItems.map((b, i) => (
+              <li key={i}>
+                <span>{b.label}</span>
+                <span className="kb-breakdown__right">
+                  {b.note && <span className="kb-breakdown__tag">{b.note}</span>}
+                  <span>{manwon(b.amount)}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="kb-breakdown-empty">아직 확보한 시상이 없어요. 5만원 구간부터 시작해보세요!</p>
+        )}
+      </div>
+
+      {/* Tier gauge */}
+      <div className="kb-card">
+        <SectionTitle>{name}님의 실적 구간</SectionTitle>
+        <TierGauge perf={perf} />
+      </div>
+
+      {/* 강북이의 추천: 코칭 멘트 + 목표를 하나의 문단으로 */}
+      <div className="kb-card kb-recommend">
+        <div className="kb-recommend__head">
+          <Kangbugi size={40} mood={goals.atMax ? "cheer" : "default"} />
+          <span className="kb-recommend__badge">강북이의 추천</span>
+        </div>
+        <SpeechBubble>
+          <p className="kb-bubble__coach">
+            {coach.main}
+            {coach.detail && (
+              <>
+                <br />
+                {coach.detail}
+              </>
+            )}
+          </p>
+        </SpeechBubble>
+      </div>
+
+      {/* SECTION: 상세 카드 */}
+      <SectionTitle>시상별 상세</SectionTitle>
+
+      <div className="kb-detail-card">
+        <div className="kb-detail-card__head">
+          <span>{AWARD_ICON.vacation} 휴가비 시상</span>
+          <span className="kb-detail-card__amount">{manwon(vacation.amount)}</span>
+        </div>
+        <p className="kb-detail-card__row">현재 구간 {vacation.tier ? manwon(vacation.tier) : "미달성"}</p>
+        {!goals.atMax && goals.nearest && (
+          <p className="kb-detail-card__row kb-detail-card__row--muted">
+            {manwon(goals.nearest.targetTier)} 구간까지 {won(goals.nearest.gap)}만 더하면 {manwonGain(goals.nearest.vacationDelta)}를
+            추가로 얻어요.
+          </p>
+        )}
+      </div>
+
+      <div className="kb-detail-card">
+        <div className="kb-detail-card__head">
+          <span>
+            {AWARD_ICON.basic} 기본 시상 {basic.bonusApplied && <Chip tone="orange">130% 적용</Chip>}
+          </span>
+          <span className="kb-detail-card__amount">{manwon(basic.amount)}</span>
+        </div>
+        <p className="kb-detail-card__row">
+          현재 구간 {basic.tier ? manwon(basic.tier) : "미달성"}
+        </p>
+        {!goals.atMax && goals.nearest && (
+          <>
+            <p className="kb-detail-card__row kb-detail-card__row--muted">
+              {campaignPhase === "before" || campaignPhase === "early" ? (
+                <>
+                  8월 5일(수)까지 {won(goals.nearest.gap)}만 더하면 {manwonGain(goals.nearest.basicDeltaEarly)}를, 8월 6일(목)~7일(금)까지{" "}
+                  {won(goals.nearest.gap)}만 더하면 {manwonGain(goals.nearest.basicDeltaLate)}를 추가로 얻어요.
+                </>
+              ) : (
+                <>지금 {won(goals.nearest.gap)}만 더하면 {manwonGain(goals.nearest.basicDeltaLate)}를 추가로 얻어요.</>
+              )}
+            </p>
+            {basic.bonusApplied && (campaignPhase === "before" || campaignPhase === "early") && (
+              <p className="kb-detail-card__footnote">
+                * 지금 {manwon(basic.tier)} 구간을 조기 달성해서 130%가 반영된 {manwon(basic.amount)}이 이미 확정돼 있어요. 8월
+                6일(목)~7일(금)에 {manwon(goals.nearest.targetTier)} 구간을 달성하면 130% 없이 {manwon(
+                  goals.nearest.targetTier
+                )}이 되어, 지금 금액({manwon(basic.amount)})보다 {manwonGain(goals.nearest.basicDeltaLate)}만 늘어나는 거예요.
+              </p>
+            )}
+          </>
+        )}
+      </div>
+
+      <div className="kb-detail-card">
+        <div className="kb-detail-card__head">
+          <span>{AWARD_ICON.highcap} 고하이캡 브릿지</span>
+          <span className="kb-detail-card__amount">
+            {highcap.achieved && <Chip tone="muted">내년 지급</Chip>}
+            {highcap.achieved ? manwon(highcap.amount) : "0원"}
+          </span>
+        </div>
+        <p className="kb-detail-card__row">
+          7월 달성 구간 {highcap.julyTier ? manwon(highcap.julyTier) + " 이상" : "미달성"}
+        </p>
+        {highcap.eligible ? (
+          highcap.achieved ? (
+            <p className="kb-detail-card__row kb-detail-card__row--good">이번 주 조건 달성 완료</p>
+          ) : (
+            <p className="kb-detail-card__row kb-detail-card__row--muted">
+              8월 14일(금)까지 {won(highcap.gap)}만 더하면 {manwon(highcap.amount)}를 추가로 얻어요.
+            </p>
+          )
+        ) : (
+          <p className="kb-detail-card__row kb-detail-card__row--muted">7월 조건 미달성으로 이번 브릿지 대상이 아니에요.</p>
+        )}
+      </div>
+
+      <div className="kb-detail-card">
+        <div className="kb-detail-card__head">
+          <span>{AWARD_ICON.mainprod} 주력상품 브릿지</span>
+          <span className="kb-detail-card__amount">
+            {mainProduct.achieved && <Chip tone="muted">내년 지급</Chip>}
+            {mainProduct.achieved ? manwon(mainProduct.amount) : "0원"}
+          </span>
+        </div>
+        <p className="kb-detail-card__row">7월 달성 여부 {mainProduct.eligible ? "달성" : "미달성"}</p>
+        {mainProduct.eligible ? (
+          mainProduct.achieved ? (
+            <p className="kb-detail-card__row kb-detail-card__row--good">이번 주 조건 달성 완료</p>
+          ) : (
+            <p className="kb-detail-card__row kb-detail-card__row--muted">
+              8월 7일(금)까지 {won(mainProduct.gap)}만 더하면 {manwon(mainProduct.amount)}를 추가로 얻어요.
+            </p>
+          )
+        ) : (
+          <p className="kb-detail-card__row kb-detail-card__row--muted">7월 조건 미달성으로 이번 브릿지 대상이 아니에요.</p>
+        )}
+      </div>
+
+      {/* 전체 시상 현황판 */}
+      <div className="kb-card kb-board">
+        <SectionTitle>{name}님의 전체 시상 현황</SectionTitle>
+        <div className="kb-board__grid">
+          <span className="kb-board__name">{AWARD_ICON.vacation} 휴가비 시상</span>
+          <span className="kb-board__meta">{vacation.tier ? manwon(vacation.tier) + " 구간" : "미달성"}</span>
+          <span className="kb-board__amt">{manwon(vacation.amount)}</span>
+
+          <span className="kb-board__name">{AWARD_ICON.basic} 기본 시상</span>
+          <span className="kb-board__meta">
+            {basic.tier ? manwon(basic.tier) + " 구간" : "미달성"}
+            {basic.bonusApplied ? " / 130%" : ""}
+          </span>
+          <span className="kb-board__amt">{manwon(basic.amount)}</span>
+
+          <span className="kb-board__name">{AWARD_ICON.highcap} 고하이캡 브릿지</span>
+          <span className="kb-board__meta">{highcap.eligible ? (highcap.achieved ? "조건 달성" : "조건 미달") : "대상 아님"}</span>
+          <span className="kb-board__amt">
+            {highcap.achieved && <span className="kb-board__tag">내년 지급</span>}
+            {highcap.achieved ? manwon(highcap.amount) : "0원"}
+          </span>
+
+          <span className="kb-board__name">{AWARD_ICON.mainprod} 주력상품 브릿지</span>
+          <span className="kb-board__meta">{mainProduct.eligible ? (mainProduct.achieved ? "조건 달성" : "조건 미달") : "대상 아님"}</span>
+          <span className="kb-board__amt">
+            {mainProduct.achieved && <span className="kb-board__tag">내년 지급</span>}
+            {mainProduct.achieved ? manwon(mainProduct.amount) : "0원"}
+          </span>
+        </div>
+
+        <div className="kb-board__total">
+          <p className="kb-board__total-label">현재 확보한 예상 시상금</p>
+          <p className="kb-board__total-amt">{won(securedTotal)}</p>
+          {goals.atMax ? (
+            pendingBridgeTotal > 0 && (
+              <p className="kb-board__pending">브릿지까지 모두 채우면 최대 {won(securedTotal + pendingBridgeTotal)}</p>
+            )
+          ) : campaignPhase === "before" || campaignPhase === "early" ? (
+            <p className="kb-board__pending">
+              8월 5일(수)까지 50만원을 달성하면 최대 {won(maxTierProjection.totalEarly + bridgeMaxTotal)}
+            </p>
+          ) : campaignPhase === "late" ? (
+            <p className="kb-board__pending">
+              8월 7일(금)까지 50만원을 달성하면 최대 {won(maxTierProjection.totalLate + bridgeMaxTotal)}
+            </p>
+          ) : (
+            pendingBridgeTotal > 0 && (
+              <p className="kb-board__pending">브릿지까지 모두 채우면 최대 {won(securedTotal + pendingBridgeTotal)}</p>
+            )
+          )}
+        </div>
+      </div>
+
+      <button className="kb-cta kb-cta--secondary" onClick={onRecalculate}>
+        다시 계산하기
+      </button>
+
+      <button className="kb-cta kb-cta--ghost" onClick={handleSaveImage} disabled={saving}>
+        {saving ? "이미지 생성 중..." : "이미지로 저장하기"}
+      </button>
+
+      <p className="kb-disclaimer">
+        ※ 강북이는 입력하신 실적과 시상 기준을 바탕으로 예상 금액을 안내하는 서비스입니다.
+        <br />
+        실제 시상금은 최종 실적 및 시상 기준 적용 결과에 따라 달라질 수 있습니다.
+      </p>
+    </div>
+  );
+}
+
+/* =========================================================================
+   APP ROOT
+   ========================================================================= */
+function KangbukApp() {
+  const [step, setStep] = useState("input"); // 'input' | 'result'
+  const [name, setName] = useState("");
+  const [code, setCode] = useState("");
+  const [perfInput, setPerfInput] = useState("");
+  const [tierDate, setTierDate] = useState("");
+
+  const result = useMemo(() => {
+    if (step !== "result") return null;
+    const perf = Number(perfInput.replace(/[^0-9]/g, "")) || 0;
+    return computeAll(name.trim(), code.trim(), perf, tierDate);
+  }, [step, name, code, perfInput, tierDate]);
+
+  function handleSubmit() {
+    setStep("result");
+  }
+
+  function handleRecalculate() {
+    setStep("input");
+  }
+
+  return (
+    <div className="kb-app">
+      <style>{CSS}</style>
+      {step === "input" || !result ? (
+        <InputScreen
+          name={name}
+          setName={setName}
+          code={code}
+          setCode={setCode}
+          perfInput={perfInput}
+          setPerfInput={setPerfInput}
+          tierDate={tierDate}
+          setTierDate={setTierDate}
+          onSubmit={handleSubmit}
+        />
+      ) : (
+        <ResultScreen result={result} onRecalculate={handleRecalculate} />
+      )}
+    </div>
+  );
+}
+
+/* =========================================================================
+   STYLES
+   ========================================================================= */
+const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
+
+.kb-app {
+  --kb-orange: #FF7A29;
+  --kb-orange-mid: #FF9557;
+  --kb-orange-dark: #C6501A;
+  --kb-orange-soft: #FFE8D6;
+  --kb-ivory: #FFF8F0;
+  --kb-white: #FFFFFF;
+  --kb-ink: #2B2A28;
+  --kb-gray: #8A8580;
+  --kb-gray-light: #ECE7DF;
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+  background: var(--kb-ivory);
+  color: var(--kb-ink);
+  min-height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+}
+.kb-app *, .kb-app *::before, .kb-app *::after { box-sizing: border-box; }
+
+.kb-screen {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 28px 18px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kb-hero { text-align: center; padding: 8px 0 4px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.kb-title { font-size: 32px; font-weight: 900; margin: 4px 0 0; letter-spacing: -0.5px; color: var(--kb-orange-dark); }
+.kb-subtitle { font-size: 16px; color: var(--kb-gray); margin: 0; font-weight: 500; }
+
+.kb-card {
+  background: var(--kb-white);
+  border-radius: 20px;
+  padding: 20px 18px;
+  border: 1px solid var(--kb-gray-light);
+}
+
+.kb-form { display: flex; flex-direction: column; gap: 18px; }
+.kb-field { display: flex; flex-direction: column; gap: 8px; }
+.kb-field__label { font-size: 16px; font-weight: 700; color: var(--kb-ink); }
+
+.kb-input {
+  width: 100%;
+  font-size: 19px;
+  font-weight: 500;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--kb-gray-light);
+  background: var(--kb-ivory);
+  color: var(--kb-ink);
+  outline: none;
+  font-family: inherit;
+}
+.kb-input:focus { border-color: var(--kb-orange); background: var(--kb-white); }
+
+.kb-input-suffix-wrap { position: relative; display: flex; align-items: center; }
+.kb-input-suffix-wrap .kb-input { padding-right: 40px; }
+.kb-input-suffix { position: absolute; right: 16px; color: var(--kb-gray); font-size: 16px; font-weight: 600; pointer-events: none; }
+
+.kb-date-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.kb-date-btn {
+  padding: 12px 0;
+  border-radius: 12px;
+  border: 1.5px solid var(--kb-gray-light);
+  background: var(--kb-white);
+  color: var(--kb-ink);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+}
+.kb-date-btn--active { background: var(--kb-orange); border-color: var(--kb-orange); color: var(--kb-white); }
+
+.kb-hint { font-size: 14px; color: var(--kb-gray); margin: -6px 0 0; }
+
+.kb-cta {
+  width: 100%;
+  padding: 17px 0;
+  border-radius: 16px;
+  border: none;
+  background: var(--kb-orange);
+  color: var(--kb-white);
+  font-size: 18px;
+  font-weight: 800;
+  font-family: inherit;
+  letter-spacing: -0.3px;
+}
+.kb-cta:disabled { background: var(--kb-gray-light); color: var(--kb-gray); }
+.kb-cta--secondary { background: var(--kb-white); color: var(--kb-orange-dark); border: 1.5px solid var(--kb-orange); }
+.kb-cta--ghost { background: var(--kb-white); color: var(--kb-ink); border: 1.5px solid var(--kb-gray-light); font-weight: 700; }
+
+.kb-error {
+  background: #FFF1EA;
+  color: var(--kb-orange-dark);
+  border: 1px solid var(--kb-orange-soft);
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.kb-disclaimer { font-size: 12px; color: #A29D96; line-height: 1.6; text-align: center; margin: 8px 4px 0; }
+
+/* Hero total card */
+.kb-hero-card { background: var(--kb-ink); border: none; text-align: left; }
+.kb-hero-card__top { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; }
+.kb-hero-card__label { color: #E6E1D8; font-size: 16px; font-weight: 600; margin: 0; line-height: 1.4; }
+.kb-hero-card__label strong { color: var(--kb-white); font-weight: 800; }
+.kb-hero-card__amount { color: var(--kb-white); font-size: 36px; font-weight: 900; margin: 0 0 14px; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+.kb-breakdown { list-style: none; margin: 0; padding: 12px 0 0; border-top: 1px solid #46433F; display: flex; flex-direction: column; gap: 9px; }
+.kb-breakdown li { display: flex; align-items: center; justify-content: space-between; color: #E6E1D8; font-size: 15px; font-weight: 600; gap: 8px; }
+.kb-breakdown__right { display: flex; align-items: center; gap: 6px; }
+.kb-breakdown__tag { font-size: 11px; font-weight: 700; color: var(--kb-orange-dark); background: var(--kb-orange-soft); padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+.kb-breakdown-empty { color: #E6E1D8; font-size: 15px; margin: 10px 0 0; }
+
+/* Recommend card */
+.kb-recommend { background: var(--kb-orange-soft); border: none; }
+.kb-recommend__head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.kb-recommend__badge { font-size: 15px; font-weight: 800; color: var(--kb-orange-dark); background: rgba(255,255,255,0.6); padding: 4px 11px; border-radius: 999px; }
+
+.kb-bubble { background: var(--kb-white); border-radius: 16px; padding: 16px; margin-top: 10px; position: relative; }
+.kb-bubble__tail { position: absolute; top: -7px; left: 24px; width: 14px; height: 14px; background: var(--kb-white); transform: rotate(45deg); border-radius: 3px; }
+.kb-bubble__coach { font-size: 16px; color: var(--kb-ink); margin: 0; line-height: 1.6; font-weight: 500; }
+.kb-plus { color: var(--kb-orange-dark); font-size: 21px; }
+
+.kb-section-title { display: flex; align-items: center; gap: 9px; font-size: 22px; font-weight: 900; letter-spacing: -0.3px; color: var(--kb-ink); margin: 0 0 14px; }
+.kb-section-title__bar { display: inline-block; width: 5px; height: 20px; background: var(--kb-orange); border-radius: 3px; flex-shrink: 0; }
+
+/* Gauge */
+.kb-gauge__track { display: flex; gap: 4px; height: 14px; }
+.kb-gauge__seg { flex: 1; background: var(--kb-gray-light); border-radius: 8px; overflow: hidden; position: relative; }
+.kb-gauge__fill { height: 100%; background: var(--kb-orange); border-radius: 8px; }
+.kb-gauge__labels { display: flex; justify-content: space-between; margin-top: 6px; }
+.kb-gauge__labels span { font-size: 12px; color: var(--kb-gray); font-weight: 600; flex: 1; text-align: right; }
+.kb-gauge__marker { position: relative; }
+
+/* Detail cards */
+.kb-detail-card { background: var(--kb-white); border: 1px solid var(--kb-gray-light); border-radius: 16px; padding: 16px 18px; }
+.kb-detail-card__head { display: flex; align-items: center; justify-content: space-between; font-size: 17px; font-weight: 800; margin-bottom: 8px; gap: 8px; }
+.kb-detail-card__amount { font-size: 19px; font-weight: 900; display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+.kb-detail-card__row { font-size: 15px; color: var(--kb-gray); margin: 3px 0 0; line-height: 1.5; }
+.kb-detail-card__row--muted { color: var(--kb-orange-dark); font-weight: 500; }
+.kb-detail-card__row--good { color: #4C8B5C; font-weight: 700; }
+.kb-detail-card__footnote { font-size: 12.5px; color: var(--kb-gray); margin: 6px 0 0; line-height: 1.5; }
+
+.kb-chip, .kb-chip--default { display: inline-block; font-size: 12.5px; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
+.kb-chip--orange { background: var(--kb-orange); color: var(--kb-white); }
+.kb-chip--muted { background: var(--kb-gray-light); color: var(--kb-gray); font-weight: 700; }
+
+/* Board — CSS grid so columns line up exactly, no zig-zag */
+.kb-board__grid { display: grid; grid-template-columns: minmax(96px, auto) 1fr auto; column-gap: 10px; }
+.kb-board__name, .kb-board__meta, .kb-board__amt { padding: 13px 0; border-bottom: 1px solid var(--kb-gray-light); }
+.kb-board__grid > *:nth-last-child(-n+3) { border-bottom: none; }
+.kb-board__name { font-size: 16px; font-weight: 700; text-align: left; }
+.kb-board__meta { font-size: 14.5px; color: var(--kb-gray); text-align: left; }
+.kb-board__amt { font-size: 17px; font-weight: 800; display: flex; align-items: center; justify-content: flex-end; gap: 6px; white-space: nowrap; text-align: right; }
+.kb-board__tag { font-size: 12px; font-weight: 700; color: var(--kb-gray); background: var(--kb-gray-light); padding: 2px 7px; border-radius: 999px; }
+.kb-board__total { margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--kb-ink); text-align: left; }
+.kb-board__total-label { font-size: 15px; color: var(--kb-gray); font-weight: 600; margin: 0 0 4px; }
+.kb-board__total-amt { font-size: 28px; font-weight: 900; margin: 0; color: var(--kb-orange-dark); font-variant-numeric: tabular-nums; }
+.kb-board__pending { font-size: 14.5px; color: var(--kb-gray); margin: 8px 0 0; font-weight: 600; }
+`;
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<KangbukApp />);
+</script>
+</body>
+</html>
