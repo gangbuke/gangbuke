@@ -14,16 +14,16 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="강북이 | 8월 1주차 시상 가이드" />
 <meta property="og:description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
-<meta property="og:image" content="https://REPLACE-WITH-YOUR-GITHUB-PAGES-URL/thumbnail.png" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
+<meta property="og:image" content="https://gangbuke.github.io/gangbuke/thumbnail.png" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
 <meta property="og:image:width" content="1731" />
 <meta property="og:image:height" content="909" />
-<meta property="og:url" content="https://REPLACE-WITH-YOUR-GITHUB-PAGES-URL/" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
+<meta property="og:url" content="https://gangbuke.github.io/gangbuke/" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
 <!-- ============================================================================== -->
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="강북이 | 8월 1주차 시상 가이드" />
 <meta name="twitter:description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
-<meta name="twitter:image" content="https://REPLACE-WITH-YOUR-GITHUB-PAGES-URL/thumbnail.png" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
+<meta name="twitter:image" content="https://gangbuke.github.io/gangbuke/thumbnail.png" /> <!-- TODO: 배포 후 실제 주소로 교체 -->
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2217%22 y=%2214%22 width=%2222%22 height=%2272%22 rx=%2211%22 fill=%22%23FF7A29%22/><rect x=%2261%22 y=%2214%22 width=%2222%22 height=%2272%22 rx=%2211%22 fill=%22%23FF7A29%22/><rect x=%2217%22 y=%2241%22 width=%2266%22 height=%2220%22 rx=%2210%22 fill=%22%23FF7A29%22/></svg>" />
 
@@ -770,6 +770,39 @@ function ResultScreen({ result, onRecalculate }) {
     }
   }
 
+  async function handleShareService() {
+    const shareData = {
+      title: "강북이 | 8월 1주차 시상 가이드",
+      text: "이번 주 예상 시상금과 다음 목표를 강북이에서 확인해보세요.",
+      url: "https://gangbuke.github.io/gangbuke/",
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (e) {
+        if (e && e.name === "AbortError") return;
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      alert("강북이 링크가 복사됐어요. 카카오톡에 붙여넣어 주세요.");
+    } catch (e) {
+      const textarea = document.createElement("textarea");
+      textarea.value = shareData.url;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      alert("강북이 링크가 복사됐어요. 카카오톡에 붙여넣어 주세요.");
+    }
+  }
+
   return (
     <div className="kb-screen">
       {/* SECTION 1: Hero total (greeting + amount as one flow) */}
@@ -981,6 +1014,10 @@ function ResultScreen({ result, onRecalculate }) {
         {saving ? "이미지 생성 중..." : "이미지로 저장하기"}
       </button>
 
+      <button className="kb-cta kb-cta--ghost" onClick={handleShareService}>
+        카톡으로 강북이 공유하기
+      </button>
+
       <p className="kb-disclaimer">
         ※ 강북이는 입력하신 실적과 시상 기준을 바탕으로 예상 금액을 안내하는 서비스입니다.
         <br />
@@ -1008,6 +1045,9 @@ function KangbukApp() {
 
   function handleSubmit() {
     setStep("result");
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
   }
 
   function handleRecalculate() {
