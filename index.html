@@ -745,16 +745,33 @@ function ResultScreen({ result, onRecalculate }) {
     setSaving(true);
     try {
       const blob = await generateShareImage(result);
-      if (blob) {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `강북이_시상_${name}.png`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+      if (!blob) return;
+
+      const file = new File([blob], `강북이_시상_${name}.png`, { type: "image/png" });
+      const shareData = {
+        title: "강북이 시상 결과",
+        text: "저장하거나 공유할 앱을 선택해 주세요.",
+        files: [file],
+      };
+
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (e) {
+          if (e && e.name === "AbortError") return;
+        }
       }
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = file.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      alert("이미지가 다운로드됐어요.");
     } catch (e) {
       /* no-op: keep UI stable even if generation fails */
     } finally {
@@ -985,7 +1002,7 @@ function ResultScreen({ result, onRecalculate }) {
       </button>
 
       <button className="kb-cta kb-cta--ghost" onClick={handleSaveImage} disabled={saving}>
-        {saving ? "이미지 생성 중..." : "이미지로 저장하기"}
+        {saving ? "이미지 생성 중..." : "이미지 저장·공유하기"}
       </button>
 
       <button className="kb-cta kb-cta--ghost" onClick={handleShareService}>
