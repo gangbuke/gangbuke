@@ -99,17 +99,30 @@ function calculateVacationAward(perf) {
   return { tier, amount: Math.round(tier * AWARD_CONFIG.vacationRate) };
 }
 
-function calculateBasicAward(perf, tierDate) {
-  if (perf < AWARD_CONFIG.smallTier) {
-    return { tier: null, amount: 0, bonusApplied: false };
+function calculateBasicAward(earlyPerf, latePerf) {
+  let earlyAmount = 0;
+  if (earlyPerf >= 100000) {
+    earlyAmount = Math.round(earlyPerf * AWARD_CONFIG.basicBonusRate);
+  } else if (earlyPerf >= AWARD_CONFIG.smallTier) {
+    earlyAmount = AWARD_CONFIG.smallTier;
   }
-  if (perf < 100000) {
-    return { tier: AWARD_CONFIG.smallTier, amount: AWARD_CONFIG.smallTier, bonusApplied: false };
-  }
-  const tier = getHighestTier(perf);
-  const bonusApplied = AWARD_CONFIG.earlyBonusDates.includes(tierDate);
-  const amount = bonusApplied ? Math.round(tier * AWARD_CONFIG.basicBonusRate) : tier;
-  return { tier, amount, bonusApplied };
+
+  let lateAmount = 0;
+  if (latePerf >= 500000) lateAmount = 500000;
+  else if (latePerf >= 400000) lateAmount = 400000;
+  else if (latePerf >= 300000) lateAmount = 300000;
+  else if (latePerf >= 200000) lateAmount = 200000;
+  else if (latePerf >= 100000) lateAmount = 100000;
+  else if (latePerf >= AWARD_CONFIG.smallTier) lateAmount = AWARD_CONFIG.smallTier;
+
+  return {
+    amount: earlyAmount + lateAmount,
+    earlyPerf,
+    latePerf,
+    earlyAmount,
+    lateAmount,
+    bonusApplied: earlyPerf >= 100000,
+  };
 }
 
 function calculateHighcapBridge(julyTier, perf) {
@@ -141,47 +154,41 @@ function getCampaignPhase() {
   return "ended";
 }
 
-function projectAwardSplit(perf) {
+function projectAwardSplit(perf, earlyPerf, latePerf, campaignPhase) {
   const vacationAmount = calculateVacationAward(perf).amount;
-  let basicEarly = 0;
-  let basicLate = 0;
-  if (perf >= 100000) {
-    const tier = getHighestTier(perf);
-    basicEarly = Math.round(tier * AWARD_CONFIG.basicBonusRate);
-    basicLate = tier;
-  } else if (perf >= AWARD_CONFIG.smallTier) {
-    basicEarly = AWARD_CONFIG.smallTier;
-    basicLate = AWARD_CONFIG.smallTier;
-  }
+  const basic = calculateBasicAward(earlyPerf, latePerf);
   return {
     vacation: vacationAmount,
-    basicEarly,
-    basicLate,
-    totalEarly: vacationAmount + basicEarly,
-    totalLate: vacationAmount + basicLate,
+    basic: basic.amount,
+    total: vacationAmount + basic.amount,
   };
 }
 
-function buildGoalStep(perf, tierDate, targetTier, currentTotal, currentVacation, currentBasic) {
+function buildGoalStep(perf, earlyPerf, latePerf, campaignPhase, targetTier, currentTotal, currentVacation, currentBasic) {
   const gap = targetTier - perf;
-  const proj = projectAwardSplit(targetTier);
+  const projectedEarlyPerf = campaignPhase === "before" || campaignPhase === "early" ? earlyPerf + gap : earlyPerf;
+  const projectedLatePerf = campaignPhase === "late" ? latePerf + gap : latePerf;
+  const projectedVacation = calculateVacationAward(targetTier).amount;
+  const projectedBasic = calculateBasicAward(projectedEarlyPerf, projectedLatePerf).amount;
+  const projectedTotal = projectedVacation + projectedBasic;
+
   return {
     targetTier,
     gap,
     currentTotal,
-    totalEarly: proj.totalEarly,
-    totalLate: proj.totalLate,
-    deltaEarly: proj.totalEarly - currentTotal,
-    deltaLate: proj.totalLate - currentTotal,
-    vacationDelta: proj.vacation - currentVacation, // date-independent
-    basicDeltaEarly: proj.basicEarly - currentBasic,
-    basicDeltaLate: proj.basicLate - currentBasic,
+    totalEarly: projectedTotal,
+    totalLate: projectedTotal,
+    deltaEarly: projectedTotal - currentTotal,
+    deltaLate: projectedTotal - currentTotal,
+    vacationDelta: projectedVacation - currentVacation,
+    basicDeltaEarly: projectedBasic - currentBasic,
+    basicDeltaLate: projectedBasic - currentBasic,
   };
 }
 
-function calculateNextGoals(perf, tierDate) {
+function calculateNextGoals(perf, earlyPerf, latePerf, campaignPhase) {
   const vac = calculateVacationAward(perf);
-  const basic = calculateBasicAward(perf, tierDate);
+  const basic = calculateBasicAward(earlyPerf, latePerf);
   const currentTotal = vac.amount + basic.amount;
 
   const atMax = perf >= MAX_TIER;
@@ -190,29 +197,30 @@ function calculateNextGoals(perf, tierDate) {
   if (!atMax) {
     const nextTier = TIER_LIST_ASC.find((t) => t > perf);
     if (nextTier) {
-      nearest = buildGoalStep(perf, tierDate, nextTier, currentTotal, vac.amount, basic.amount);
+      nearest = buildGoalStep(perf, earlyPerf, latePerf, campaignPhase, nextTier, currentTotal, vac.amount, basic.amount);
     }
   }
 
   let challenge = null;
   if (!atMax) {
-    challenge = buildGoalStep(perf, tierDate, MAX_TIER, currentTotal, vac.amount, basic.amount);
+    challenge = buildGoalStep(perf, earlyPerf, latePerf, campaignPhase, MAX_TIER, currentTotal, vac.amount, basic.amount);
   }
 
   return { currentTotal, nearest, challenge, atMax };
 }
 
 /* --------------------------------------------------------- ORCHESTRATOR */
-function computeAll(name, code, perf, tierDate) {
+function computeAll(name, code, earlyPerf, latePerf) {
+  const perf = earlyPerf + latePerf;
   const julyTier = HIGHCAP_JULY[code] || null;
   const mainAchievedJuly = MAINPROD_JULY.has(code);
 
   const vacation = calculateVacationAward(perf);
-  const basic = calculateBasicAward(perf, tierDate);
+  const basic = calculateBasicAward(earlyPerf, latePerf);
   const highcap = calculateHighcapBridge(julyTier, perf);
   const mainProduct = calculateMainProductBridge(mainAchievedJuly, perf);
   const campaignPhase = getCampaignPhase();
-  const goals = calculateNextGoals(perf, tierDate);
+  const goals = calculateNextGoals(perf, earlyPerf, latePerf, campaignPhase);
 
   const securedTotal =
     vacation.amount + basic.amount + (highcap.achieved ? highcap.amount : 0) + (mainProduct.achieved ? mainProduct.amount : 0);
@@ -223,7 +231,8 @@ function computeAll(name, code, perf, tierDate) {
   return {
     name,
     perf,
-    tierDate,
+    earlyPerf,
+    latePerf,
     julyTier,
     mainAchievedJuly,
     vacation,
@@ -342,24 +351,21 @@ function TierGauge({ perf }) {
 /* =========================================================================
    INPUT SCREEN
    ========================================================================= */
-function InputScreen({ name, setName, code, setCode, perfInput, setPerfInput, tierDate, setTierDate, onSubmit }) {
-  const perf = Number(perfInput.replace(/[^0-9]/g, "")) || 0;
-  const dateTier = perf >= 100000 ? getHighestTier(perf) : null;
-  const needsSmallNotice = perf >= AWARD_CONFIG.smallTier && perf < 100000;
+function InputScreen({ name, setName, code, setCode, earlyPerfInput, setEarlyPerfInput, latePerfInput, setLatePerfInput, onSubmit }) {
+  const earlyPerf = Number(earlyPerfInput.replace(/[^0-9]/g, "")) || 0;
+  const latePerf = Number(latePerfInput.replace(/[^0-9]/g, "")) || 0;
+  const perf = earlyPerf + latePerf;
 
-  function handlePerfChange(e) {
-    const raw = e.target.value.replace(/[^0-9]/g, "");
-    setPerfInput(raw);
-    const numeric = Number(raw) || 0;
-    if (numeric < 100000) setTierDate("");
+  function handlePerfChange(setter, e) {
+    setter(e.target.value.replace(/[^0-9]/g, ""));
   }
 
-  function displayPerf() {
-    if (!perfInput) return "";
-    return Number(perfInput).toLocaleString("ko-KR");
+  function displayPerf(value) {
+    if (!value) return "";
+    return Number(value).toLocaleString("ko-KR");
   }
 
-  const canSubmit = name.trim().length > 0 && code.trim().length > 0 && perf > 0 && (dateTier ? !!tierDate : true);
+  const canSubmit = name.trim().length > 0 && code.trim().length > 0 && perf > 0;
 
   return (
     <div className="kb-screen">
@@ -372,72 +378,33 @@ function InputScreen({ name, setName, code, setCode, perfInput, setPerfInput, ti
       <div className="kb-card kb-form">
         <label className="kb-field">
           <span className="kb-field__label">① 이름</span>
-          <input
-            className="kb-input"
-            type="text"
-            inputMode="text"
-            placeholder="예) 김강북"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoComplete="off"
-          />
+          <input className="kb-input" type="text" inputMode="text" placeholder="예) 김강북" value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" />
         </label>
 
         <label className="kb-field">
           <span className="kb-field__label">② 플래너 코드 (브릿지 시상 확인용)</span>
-          <input
-            className="kb-input"
-            type="text"
-            inputMode="text"
-            placeholder="예) 1Z7777"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            autoComplete="off"
-          />
+          <input className="kb-input" type="text" inputMode="text" placeholder="예) 1Z7777" value={code} onChange={(e) => setCode(e.target.value)} autoComplete="off" />
         </label>
 
         <label className="kb-field">
-          <span className="kb-field__label">③ 현재 인보험 실적</span>
+          <span className="kb-field__label">③ 8/3(월)~8/5(수) 인보험 실적</span>
           <div className="kb-input-suffix-wrap">
-            <input
-              className="kb-input"
-              type="text"
-              inputMode="numeric"
-              placeholder="예) 380,000"
-              value={displayPerf()}
-              onChange={handlePerfChange}
-            />
+            <input className="kb-input" type="text" inputMode="numeric" placeholder="예) 380,000" value={displayPerf(earlyPerfInput)} onChange={(e) => handlePerfChange(setEarlyPerfInput, e)} />
             <span className="kb-input-suffix">원</span>
           </div>
         </label>
 
-        {dateTier && (
-          <div className="kb-field">
-            <span className="kb-field__label">
-              ④ {manwon(dateTier)} 구간을 언제 달성하셨나요?
-            </span>
-            <div className="kb-date-grid">
-              {AWARD_CONFIG.dateOptions.map((d) => (
-                <button
-                  key={d}
-                  type="button"
-                  className={`kb-date-btn ${tierDate === d ? "kb-date-btn--active" : ""}`}
-                  onClick={() => setTierDate(d)}
-                >
-                  {d}
-                </button>
-              ))}
-            </div>
+        <label className="kb-field">
+          <span className="kb-field__label">④ 8/6(목)~8/7(금) 인보험 실적</span>
+          <div className="kb-input-suffix-wrap">
+            <input className="kb-input" type="text" inputMode="numeric" placeholder="예) 170,000" value={displayPerf(latePerfInput)} onChange={(e) => handlePerfChange(setLatePerfInput, e)} />
+            <span className="kb-input-suffix">원</span>
           </div>
-        )}
+        </label>
 
-        {needsSmallNotice && (
-          <p className="kb-hint">5만원 구간은 130% 조기달성 혜택이 적용되지 않아요.</p>
-        )}
+        <p className="kb-hint">휴가비·브릿지 시상은 두 기간의 실적을 합산해 계산해요.</p>
 
-        <button className="kb-cta" disabled={!canSubmit} onClick={onSubmit}>
-          지금 바로 확인하기
-        </button>
+        <button className="kb-cta" disabled={!canSubmit} onClick={onSubmit}>지금 바로 확인하기</button>
       </div>
 
       <p className="kb-disclaimer">
@@ -575,7 +542,7 @@ function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
 }
 
 async function generateShareImage(result) {
-  const { name, perf, securedTotal, vacation, basic, highcap, mainProduct, goals, campaignPhase } = result;
+  const { name, perf, earlyPerf, latePerf, securedTotal, vacation, basic, highcap, mainProduct, goals, campaignPhase } = result;
   const items = [];
   if (vacation.amount > 0) items.push({ label: "⛱️ 휴가비", amount: vacation.amount });
   if (basic.amount > 0) items.push({ label: "💰 기본시상", amount: basic.amount });
@@ -584,10 +551,17 @@ async function generateShareImage(result) {
 
   const bridgeMaxTotal = (highcap.eligible ? highcap.amount : 0) + (mainProduct.eligible ? mainProduct.amount : 0);
   const stillHasEarlyWindow = campaignPhase === "before" || campaignPhase === "early";
-  const maxProj = !goals.atMax ? projectAwardSplit(MAX_TIER) : null;
+  const maxProj = !goals.atMax
+    ? projectAwardSplit(
+        MAX_TIER,
+        stillHasEarlyWindow ? earlyPerf + (MAX_TIER - perf) : earlyPerf,
+        campaignPhase === "late" ? latePerf + (MAX_TIER - perf) : latePerf,
+        campaignPhase
+      )
+    : null;
   const maxTotal = goals.atMax
     ? securedTotal + (highcap.eligible && !highcap.achieved ? highcap.amount : 0) + (mainProduct.eligible && !mainProduct.achieved ? mainProduct.amount : 0)
-    : (stillHasEarlyWindow ? maxProj.totalEarly : maxProj.totalLate) + bridgeMaxTotal;
+    : maxProj.total + bridgeMaxTotal;
   const maxDeadlineLabel = campaignPhase === "late" ? "8월 7일(금)" : "8월 5일(수)";
   const gapToMax = goals.atMax ? 0 : MAX_TIER - perf;
 
@@ -734,7 +708,7 @@ async function generateShareImage(result) {
 }
 
 function ResultScreen({ result, onRecalculate }) {
-  const { name, perf, vacation, basic, highcap, mainProduct, goals, securedTotal, pendingBridgeTotal, campaignPhase } = result;
+  const { name, perf, earlyPerf, latePerf, vacation, basic, highcap, mainProduct, goals, securedTotal, pendingBridgeTotal, campaignPhase } = result;
   const [saving, setSaving] = useState(false);
 
   const breakdownItems = [];
@@ -747,7 +721,14 @@ function ResultScreen({ result, onRecalculate }) {
 
   // true grand-maximum this week: 50만원 구간 + (있다면) 130% + 자격 있는 브릿지 전부
   const bridgeMaxTotal = (highcap.eligible ? highcap.amount : 0) + (mainProduct.eligible ? mainProduct.amount : 0);
-  const maxTierProjection = !goals.atMax ? projectAwardSplit(MAX_TIER) : null;
+  const maxTierProjection = !goals.atMax
+    ? projectAwardSplit(
+        MAX_TIER,
+        campaignPhase === "before" || campaignPhase === "early" ? earlyPerf + (MAX_TIER - perf) : earlyPerf,
+        campaignPhase === "late" ? latePerf + (MAX_TIER - perf) : latePerf,
+        campaignPhase
+      )
+    : null;
 
   async function handleSaveImage() {
     setSaving(true);
@@ -875,36 +856,19 @@ function ResultScreen({ result, onRecalculate }) {
 
       <div className="kb-detail-card">
         <div className="kb-detail-card__head">
-          <span>
-            {AWARD_ICON.basic} 기본 시상 {basic.bonusApplied && <Chip tone="orange">130% 적용</Chip>}
-          </span>
+          <span>{AWARD_ICON.basic} 기본 시상</span>
           <span className="kb-detail-card__amount">{manwon(basic.amount)}</span>
         </div>
         <p className="kb-detail-card__row">
-          현재 구간 {basic.tier ? manwon(basic.tier) : "미달성"}
+          8/3(월)~8/5(수) 실적 {won(basic.earlyPerf)} → {won(basic.earlyAmount)}
+          {basic.bonusApplied && <Chip tone="orange">130% 적용</Chip>}
         </p>
-        {!goals.atMax && goals.nearest && (
-          <>
-            <p className="kb-detail-card__row kb-detail-card__row--muted">
-              {campaignPhase === "before" || campaignPhase === "early" ? (
-                <>
-                  8월 5일(수)까지 {won(goals.nearest.gap)}만 더하면 {manwonGain(goals.nearest.basicDeltaEarly)}를, 8월 6일(목)~7일(금)까지{" "}
-                  {won(goals.nearest.gap)}만 더하면 {manwonGain(goals.nearest.basicDeltaLate)}를 추가로 얻어요.
-                </>
-              ) : (
-                <>지금 {won(goals.nearest.gap)}만 더하면 {manwonGain(goals.nearest.basicDeltaLate)}를 추가로 얻어요.</>
-              )}
-            </p>
-            {basic.bonusApplied && (campaignPhase === "before" || campaignPhase === "early") && (
-              <p className="kb-detail-card__footnote">
-                * 지금 {manwon(basic.tier)} 구간을 조기 달성해서 130%가 반영된 {manwon(basic.amount)}이 이미 확정돼 있어요. 8월
-                6일(목)~7일(금)에 {manwon(goals.nearest.targetTier)} 구간을 달성하면 130% 없이 {manwon(
-                  goals.nearest.targetTier
-                )}이 되어, 지금 금액({manwon(basic.amount)})보다 {manwonGain(goals.nearest.basicDeltaLate)}만 늘어나는 거예요.
-              </p>
-            )}
-          </>
-        )}
+        <p className="kb-detail-card__row">
+          8/6(목)~8/7(금) 실적 {won(basic.latePerf)} → {won(basic.lateAmount)}
+        </p>
+        <p className="kb-detail-card__row kb-detail-card__row--muted">
+          두 기간은 별도로 계산하며, 기본 시상은 두 금액을 합산해요.
+        </p>
       </div>
 
       <div className="kb-detail-card">
@@ -963,8 +927,7 @@ function ResultScreen({ result, onRecalculate }) {
 
           <span className="kb-board__name">{AWARD_ICON.basic} 기본 시상</span>
           <span className="kb-board__meta">
-            {basic.tier ? manwon(basic.tier) + " 구간" : "미달성"}
-            {basic.bonusApplied ? " / 130%" : ""}
+            3~5일 {manwon(basic.earlyAmount)} + 6~7일 {manwon(basic.lateAmount)}
           </span>
           <span className="kb-board__amt">{manwon(basic.amount)}</span>
 
@@ -992,11 +955,11 @@ function ResultScreen({ result, onRecalculate }) {
             )
           ) : campaignPhase === "before" || campaignPhase === "early" ? (
             <p className="kb-board__pending">
-              8월 5일(수)까지 50만원을 달성하면 최대 {won(maxTierProjection.totalEarly + bridgeMaxTotal)}
+              8월 5일(수)까지 50만원을 달성하면 최대 {won(maxTierProjection.total + bridgeMaxTotal)}
             </p>
           ) : campaignPhase === "late" ? (
             <p className="kb-board__pending">
-              8월 7일(금)까지 50만원을 달성하면 최대 {won(maxTierProjection.totalLate + bridgeMaxTotal)}
+              8월 7일(금)까지 50만원을 달성하면 최대 {won(maxTierProjection.total + bridgeMaxTotal)}
             </p>
           ) : (
             pendingBridgeTotal > 0 && (
@@ -1034,14 +997,15 @@ function KangbukApp() {
   const [step, setStep] = useState("input"); // 'input' | 'result'
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [perfInput, setPerfInput] = useState("");
-  const [tierDate, setTierDate] = useState("");
+  const [earlyPerfInput, setEarlyPerfInput] = useState("");
+  const [latePerfInput, setLatePerfInput] = useState("");
 
   const result = useMemo(() => {
     if (step !== "result") return null;
-    const perf = Number(perfInput.replace(/[^0-9]/g, "")) || 0;
-    return computeAll(name.trim(), code.trim(), perf, tierDate);
-  }, [step, name, code, perfInput, tierDate]);
+    const earlyPerf = Number(earlyPerfInput.replace(/[^0-9]/g, "")) || 0;
+    const latePerf = Number(latePerfInput.replace(/[^0-9]/g, "")) || 0;
+    return computeAll(name.trim(), code.trim(), earlyPerf, latePerf);
+  }, [step, name, code, earlyPerfInput, latePerfInput]);
 
   function handleSubmit() {
     setStep("result");
@@ -1063,10 +1027,10 @@ function KangbukApp() {
           setName={setName}
           code={code}
           setCode={setCode}
-          perfInput={perfInput}
-          setPerfInput={setPerfInput}
-          tierDate={tierDate}
-          setTierDate={setTierDate}
+          earlyPerfInput={earlyPerfInput}
+          setEarlyPerfInput={setEarlyPerfInput}
+          latePerfInput={latePerfInput}
+          setLatePerfInput={setLatePerfInput}
           onSubmit={handleSubmit}
         />
       ) : (
