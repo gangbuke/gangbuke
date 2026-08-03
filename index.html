@@ -2,6 +2,17 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
+<script>
+  // 카카오톡 등 인앱 브라우저에서 오래된 화면이 남는 것을 줄이기 위해
+  // 기본 주소로 접속하면 이번 접속에 한해 새 주소로 다시 불러옵니다.
+  (function () {
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has("fresh")) {
+      url.searchParams.set("fresh", Date.now().toString());
+      window.location.replace(url.toString());
+    }
+  })();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title>강북이 | 8월 1주차 시상 가이드</title>
 <meta name="description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
@@ -440,15 +451,15 @@ function buildCoachMessage(result) {
     return { main: `${name}님, 브릿지 시상도 함께 챙겨보세요.`, detail: null };
   }
 
-  const { gap, deltaEarly, deltaLate, targetTier } = goals.nearest;
+  const { gap, deltaEarly, deltaLate, targetTier, basicDeltaLate } = goals.nearest;
   const stillHasEarlyWindow = campaignPhase === "before" || campaignPhase === "early";
 
-  const main = `${name}님, ${manwon(targetTier)} 구간까지 ${won(gap)} 남았어요.`;
+  const main = `${name}님, 전체 실적 ${manwon(targetTier)}까지 ${won(gap)} 남았어요.`;
   let detail;
   if (stillHasEarlyWindow) {
-    detail = `8월 5일(수)까지 ${won(gap)}을 더 하셔서 ${manwonGain(deltaEarly)}을 얻어 가시는 걸 추천드려요.`;
+    detail = `8월 5일(수)까지 앞기간 실적에 ${won(gap)}을 더하면, 기본 시상은 130% 기준으로 계산돼요. 휴가비까지 포함해 예상 시상금이 총 ${won(Math.max(0, deltaEarly))} 늘어요.`;
   } else if (campaignPhase === "late") {
-    detail = `8월 7일(금)까지 ${won(gap)}을 더 하셔서 ${manwonGain(deltaLate)}을 얻어 가시는 걸 추천드려요.`;
+    detail = `8월 6일(목)~7일(금) 실적은 앞기간 실적과 별도로 계산돼요. 이틀 동안 ${won(gap)}을 더하면 추가 기본 시상 ${won(Math.max(0, basicDeltaLate))}을 받고, 휴가비까지 포함해 예상 시상금이 총 ${won(Math.max(0, deltaLate))} 늘어요.`;
   } else {
     detail = "이번 주 시상 기간은 마감됐어요. 다음 주 시상도 곧 안내해드릴게요.";
   }
