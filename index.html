@@ -1071,7 +1071,9 @@ function KangbukApp() {
   return (
     <div className="kb-app">
       <style>{CSS}</style>
-      {screen === "input" || !result ? (
+      {screen === "gallery" ? (
+        <GalleryScreen onBack={() => setScreen("result")} onOpenPoster={(k) => setPosterKey(k)} />
+      ) : screen === "input" || !result ? (
         <InputScreen
           name={name} setName={setName}
           code={code} setCode={setCode}
@@ -1082,8 +1084,6 @@ function KangbukApp() {
           amchiPerfInput={amchiPerfInput} setAmchiPerfInput={setAmchiPerfInput}
           onSubmit={handleSubmit}
         />
-      ) : screen === "gallery" ? (
-        <GalleryScreen onBack={() => setScreen("result")} onOpenPoster={(k) => setPosterKey(k)} />
       ) : (
         <ResultScreen
           result={result}
