@@ -60,7 +60,12 @@ const FEEDBACK_FORM_URL = "https://naver.me/xNpbSD3X";
 function track(eventName, params) {
   try {
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      window.gtag("event", eventName, params || {});
+      window.gtag("event", eventName, {
+        app_name: "gangbuki",
+        app_version: APP_VERSION,
+        campaign_week: "2026_aug_week2",
+        ...(params || {}),
+      });
     }
   } catch (e) {
     /* 트래킹 실패해도 앱 동작에는 영향 없도록 조용히 무시 */
@@ -374,6 +379,7 @@ function InputScreen({
   }
   function handleSubmit() {
     track("form_submit");
+    track("result_submit");
     onSubmit();
   }
 
@@ -749,6 +755,27 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster }) {
   const { name, basic, highcap, amchi, giftSmall, giftTier, nextGoal, securedTotal, pendingBridgeTotal, isOverride } = result;
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    track("result_view");
+  }, []);
+
+  useEffect(() => {
+    let sent = false;
+    function handleScrollDepth() {
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - window.innerHeight;
+      if (sent || scrollable <= 0) return;
+      const ratio = (window.scrollY || doc.scrollTop || 0) / scrollable;
+      if (ratio >= 0.9) {
+        sent = true;
+        track("scroll_90");
+      }
+    }
+    window.addEventListener("scroll", handleScrollDepth, { passive: true });
+    handleScrollDepth();
+    return () => window.removeEventListener("scroll", handleScrollDepth);
+  }, []);
+
   const breakdownItems = [];
   if (basic.amount > 0) breakdownItems.push({ label: "💰 기본시상", amount: basic.amount });
   if (highcap.achieved) breakdownItems.push({ label: "🌉 고하이캡 브릿지", amount: highcap.amount, note: "내년 지급" });
@@ -756,6 +783,10 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster }) {
 
   const coach = buildCoachMessage(result);
   const hasGifts = giftSmall.achieved || giftTier.achieved;
+
+  useEffect(() => {
+    track("ad_banner_view", { banner: "recruit_370" });
+  }, []);
 
   async function handleSaveImage() {
     track("save_image_click");
@@ -771,6 +802,7 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster }) {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+        track("image_save", { method: "download" });
       }
     } catch (e) {
     } finally {
@@ -789,6 +821,7 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster }) {
       if (navigator.share) {
         await navigator.share(shareData);
         track("kakao_share_result", { method: "native_share" });
+        track("service_share", { method: "native_share" });
         return;
       }
     } catch (e) {
@@ -799,6 +832,7 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster }) {
     try {
       await navigator.clipboard.writeText(shareData.url);
       track("kakao_share_result", { method: "clipboard_fallback" });
+      track("service_share", { method: "clipboard_fallback" });
       alert("링크가 복사됐어요! 카톡에 붙여넣기 해서 공유해보세요.");
     } catch (e) {
       const textarea = document.createElement("textarea");
@@ -808,6 +842,7 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster }) {
       try {
         document.execCommand("copy");
         track("kakao_share_result", { method: "execcommand_fallback" });
+        track("service_share", { method: "execcommand_fallback" });
         alert("링크가 복사됐어요! 카톡에 붙여넣기 해서 공유해보세요.");
       } catch (e2) {
         alert(shareData.url);
@@ -894,7 +929,7 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster }) {
       </div>
 
       {/* 도입/위촉 광고 배너 */}
-      <button className="kb-ad-banner" onClick={() => { track("ad_banner_click"); onOpenPoster("recruit"); }}>
+      <button className="kb-ad-banner" onClick={() => { track("ad_banner_click", { banner: "recruit_370" }); onOpenPoster("recruit"); }}>
         <span className="kb-ad-banner__gift">💰</span>
         <span className="kb-ad-banner__text">이번달 도입하고 370만원 받아가세요</span>
         <span className="kb-ad-banner__arrow">›</span>
@@ -1021,7 +1056,7 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster }) {
         💬 카톡으로 강북이 공유하기
       </button>
 
-      <button className="kb-feedback-banner" onClick={() => { track("feedback_banner_click"); window.open(FEEDBACK_FORM_URL, "_blank", "noopener,noreferrer"); }}>
+      <button className="kb-feedback-banner" onClick={() => { track("feedback_banner_click"); track("feedback_click"); window.open(FEEDBACK_FORM_URL, "_blank", "noopener,noreferrer"); }}>
         <span className="kb-feedback-banner__icon">⭐</span>
         <span className="kb-feedback-banner__text">
           <strong>강북이 만족도 조사에 참여해주세요</strong>
@@ -1059,7 +1094,7 @@ function GalleryScreen({ onBack, onOpenPoster }) {
       </div>
       <div className="kb-card kb-gallery-list">
         {weeks.map(([key, w]) => (
-          <button key={key} className="kb-gallery-item" onClick={() => onOpenPoster(key)}>
+          <button key={key} className="kb-gallery-item" onClick={() => { track("gallery_poster_click", { poster: key }); onOpenPoster(key); }}>
             <span>{w.label}</span>
             <span className="kb-gallery-item__arrow">›</span>
           </button>
