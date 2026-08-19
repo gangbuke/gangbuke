@@ -67,8 +67,18 @@ const WEEK2_RESULTS = {"129373":{"basic":0,"highcap20":200890,"mainprod":0,"gift
 
 /* 3주차 마감실적 — 아직 실제 데이터 없음. 나중에 관리자님이 주시는 데이터로
    이 객체만 채우면 이번 주 실적이 자동으로 반영됩니다. (코드 -> 원 단위 금액) */
-const WEEKLY_CLOSING_PERF = {};
-const WEEKLY_CLOSING_LABEL = "8월 17일(월) 18시 기준";
+const WEEKLY_CLOSING_PERF = {"147073":10000,"159789":145140,"952581":29830,"980663":125810,"127758":241840,"806400":23320,"928060":293300,"967315":90850,"1C3857":92440,"154870":101150,"1D7819":95140,"922290":41640,"952159":118080,"9A1454":86350,"1D7920":36500,"952459":18440,"959596":36450,"155102":57710,"1C3494":50000,"1C8699":30060,"788940":26620,"141396":51870,"1A4155":26640,"962176":50260,"737400":20430,"979895":80230,"980803":121060,"984581":131160,"986054":21000,"834920":19940,"943575":210980,"192452":55290,"1C7798":18210,"1C6118":130120,"1D7648":44970,"977729":54550,"738740":113120,"132511":53040,"197476":97980,"1D7129":55240,"042821":109340,"954853":50000,"960964":136820,"069563":32280,"1A8706":140980,"1C1191":92820,"1D3092":85130,"1D4123":19310,"059513":218860,"147775":85970,"1D0411":51440,"1D1782":132700,"1D6778":18000,"1D6977":33230,"000008":256830,"194584":58460,"060147":24980,"115199":61090,"1D1370":103850,"790130":47050,"981466":103610,"1B5693":20960,"1C7371":66900,"1D7752":29950,"858150":57500,"986778":127780,"134939":170850,"198931":158900,"1C2997":24850,"962854":123260,"127319":21330,"1D9195":242690,"138167":143910,"1C3318":135170,"1C7548":10000,"1D4083":220330,"1A6444":20210,"1B9235":174500,"960582":171550,"138814":35270,"1B9404":45130,"053665":155440,"1A1986":130620,"1D5025":43690,"9A7084":273440,"1A7533":15000,"965706":131090,"894280":51440,"108631":115830,"057895":100000,"067035":59490,"119150":53840,"150708":38090,"1A1798":20000,"1B5914":70200,"1A5739":11850,"1A6934":117500,"1B6601":188950,"970680":83000,"065096":81860,"1C7907":34120,"9A6233":104950,"1D4121":20000,"1A7906":156790,"1B0426":51900,"1C7925":90640,"1B9523":12570}; // code -> 원 (0원인 사람은 데이터에 없음, 조회시 기본값 0)
+const WEEKLY_CLOSING_LABEL = "8월 19일(수) 14시 30분 마감 기준";
+
+const HIGHCAP_BRIDGE_CLOSING_PERF = {"1D7129":55240,"1D3092":85130,"069563":32280,"1A8706":116230,"1D4123":19310,"1C1191":52640,"059513":218860,"147775":85970,"1D1782":115870,"1D0411":51440,"970680":83000,"1B6601":188950,"154870":101150,"1B9235":174500,"1B9404":45130,"9A7084":273440,"053665":155440,"194584":58460,"790130":47050,"981466":103610,"1D1370":103850,"060147":24980,"986778":127780,"858150":57500,"1C7371":66900,"981302":25760,"962854":123260,"127319":21330,"1C3318":114570,"959596":36450,"1D7920":36500,"1C8699":30060,"788940":26620,"962176":50260,"141396":51870,"894280":51440,"108631":57440,"150708":38090,"067035":31560,"1B5914":70200,"965706":72120,"737400":20430,"980803":121060,"834920":19940,"943575":19000,"1D7648":44970,"977729":54550,"1A7906":32090,"1B0426":51900,"980663":125810,"127758":175280,"928060":293300,"806400":23320}; // code -> 원
+const HIGHCAP_BRIDGE_CLOSING_LABEL = "8월 18일(화) 마감 기준";
+
+function getClosingPerf(code) {
+  return code && WEEKLY_CLOSING_PERF[code] !== undefined ? WEEKLY_CLOSING_PERF[code] : 0;
+}
+function getHighcapBridgeClosingPerf(code) {
+  return code && HIGHCAP_BRIDGE_CLOSING_PERF[code] !== undefined ? HIGHCAP_BRIDGE_CLOSING_PERF[code] : 0;
+}
 
 const POSTERS = {
   week1: { label: "8월 1주차", file: "poster_week1.jpg" },
@@ -321,10 +331,9 @@ function PosterModal({ file, onClose }) {
   );
 }
 
-/* 3주차 마감실적 안내 — 이름 입력 시 바로 아래 표시. 실제 데이터가 채워지기 전까지는
-   전원 0원으로 표시됨 (WEEKLY_CLOSING_PERF가 비어있기 때문) */
+/* 이번 주 마감실적 안내 — 이름/코드 입력 시 바로 아래 표시 */
 function ClosingPerfBox({ code }) {
-  const amount = code && WEEKLY_CLOSING_PERF[code] !== undefined ? WEEKLY_CLOSING_PERF[code] : 0;
+  const amount = getClosingPerf(code);
   return (
     <div className="kb-closing-perf">
       <span className="kb-closing-perf__label">이번 주 마감실적</span>
@@ -358,24 +367,30 @@ function SurveyInterstitial({ onGoSurvey, onSkip }) {
    ========================================================================= */
 function InputScreen({
   name, setName, code, setCode,
-  perfInput, setPerfInput,
+  perfAdditionalInput, setPerfAdditionalInput,
   mainProductInput, setMainProductInput,
   isOverride, setIsOverride,
   amchiPerfInput, setAmchiPerfInput,
   amchiCountInput, setAmchiCountInput,
-  highcapBridgeInput, setHighcapBridgeInput,
+  highcapBridgeAdditionalInput, setHighcapBridgeAdditionalInput,
   onSubmit,
 }) {
-  const perf = Number(perfInput.replace(/[^0-9]/g, "")) || 0;
+  const matches = useMemo(() => findCodesByName(name), [name]);
+  const needsCode = matches.length > 1;
+  const resolvedCode = matches.length === 1 ? matches[0] : needsCode ? code.trim().toUpperCase() : "";
+
+  const closingPerf = getClosingPerf(resolvedCode);
+  const highcapClosingPerf = getHighcapBridgeClosingPerf(resolvedCode);
+
+  const perfAdditional = Number(perfAdditionalInput.replace(/[^0-9]/g, "")) || 0;
+  const perf = closingPerf + perfAdditional;
   const mainProductPerf = Number(mainProductInput.replace(/[^0-9]/g, "")) || 0;
   const amchiPerf = Number(amchiPerfInput.replace(/[^0-9]/g, "")) || 0;
   const amchiCount = Number(amchiCountInput.replace(/[^0-9]/g, "")) || 0;
-  const highcapBridgePerf = Number(highcapBridgeInput.replace(/[^0-9]/g, "")) || 0;
+  const highcapBridgeAdditional = Number(highcapBridgeAdditionalInput.replace(/[^0-9]/g, "")) || 0;
+  const highcapBridgePerf = highcapClosingPerf + highcapBridgeAdditional;
 
-  const matches = useMemo(() => findCodesByName(name), [name]);
-  const needsCode = matches.length > 1;
   const needsMainProduct = perf >= 50000;
-  const resolvedCode = matches.length === 1 ? matches[0] : needsCode ? code.trim().toUpperCase() : "";
 
   const [startedTracked, setStartedTracked] = useState(false);
   function handleNameFocus() {
@@ -392,8 +407,8 @@ function InputScreen({
     if (!input) return "";
     return Number(input).toLocaleString("ko-KR");
   }
-  function handlePerfChange(e) {
-    setPerfInput(e.target.value.replace(/[^0-9]/g, ""));
+  function handlePerfAdditionalChange(e) {
+    setPerfAdditionalInput(e.target.value.replace(/[^0-9]/g, ""));
   }
   function handleMainProductChange(e) {
     setMainProductInput(e.target.value.replace(/[^0-9]/g, ""));
@@ -404,15 +419,15 @@ function InputScreen({
   function handleAmchiCountChange(e) {
     setAmchiCountInput(e.target.value.replace(/[^0-9]/g, ""));
   }
-  function handleHighcapBridgeChange(e) {
-    setHighcapBridgeInput(e.target.value.replace(/[^0-9]/g, ""));
+  function handleHighcapBridgeAdditionalChange(e) {
+    setHighcapBridgeAdditionalInput(e.target.value.replace(/[^0-9]/g, ""));
   }
   function handleSubmit() {
     track("form_submit");
     onSubmit();
   }
 
-  const canSubmit = name.trim().length > 0 && (!needsCode || code.trim().length > 0) && perf >= 0;
+  const canSubmit = name.trim().length > 0 && (!needsCode || code.trim().length > 0);
 
   return (
     <div className="kb-screen">
@@ -456,17 +471,23 @@ function InputScreen({
 
         <label className="kb-field">
           <span className="kb-field__label">이번 주 인보험 실적</span>
+          <p className="kb-field__baseline">
+            마감 기준 <strong>{won(closingPerf)}</strong>인데, 여기서 추가로 얼마나 더 하실 건가요?
+          </p>
           <div className="kb-input-suffix-wrap">
             <input
               className="kb-input"
               type="text"
               inputMode="numeric"
-              placeholder="예) 380,000"
-              value={fmt(perfInput)}
-              onChange={handlePerfChange}
+              placeholder="예) 100,000"
+              value={fmt(perfAdditionalInput)}
+              onChange={handlePerfAdditionalChange}
             />
             <span className="kb-input-suffix">원</span>
           </div>
+          <p className="kb-field__total">
+            합계 실적: <strong>{won(perf)}</strong>
+          </p>
         </label>
 
         {needsMainProduct && (
@@ -536,19 +557,25 @@ function InputScreen({
 
         <label className="kb-field">
           <span className="kb-field__label">
-            고하이캡 브릿지 관련 실적 <span className="kb-field__hint">(8월 3~5주차 누적, 장기하이캡 17배 이상 계약)</span>
+            고하이캡 브릿지 관련 실적 <span className="kb-field__hint">(장기하이캡 17배 이상 계약)</span>
           </span>
+          <p className="kb-field__baseline">
+            {HIGHCAP_BRIDGE_CLOSING_LABEL} <strong>{won(highcapClosingPerf)}</strong>인데, 여기서 추가로 얼마나 더 하실 건가요?
+          </p>
           <div className="kb-input-suffix-wrap">
             <input
               className="kb-input"
               type="text"
               inputMode="numeric"
-              placeholder="예) 150,000"
-              value={fmt(highcapBridgeInput)}
-              onChange={handleHighcapBridgeChange}
+              placeholder="예) 50,000"
+              value={fmt(highcapBridgeAdditionalInput)}
+              onChange={handleHighcapBridgeAdditionalChange}
             />
             <span className="kb-input-suffix">원</span>
           </div>
+          <p className="kb-field__total">
+            합계: <strong>{won(highcapBridgePerf)}</strong>
+          </p>
         </label>
 
         <button className="kb-cta" disabled={!canSubmit} onClick={handleSubmit}>
@@ -1218,12 +1245,12 @@ function KangbukApp() {
 
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [perfInput, setPerfInput] = useState("");
+  const [perfAdditionalInput, setPerfAdditionalInput] = useState("");
   const [mainProductInput, setMainProductInput] = useState("");
   const [isOverride, setIsOverride] = useState(false);
   const [amchiPerfInput, setAmchiPerfInput] = useState("");
   const [amchiCountInput, setAmchiCountInput] = useState("");
-  const [highcapBridgeInput, setHighcapBridgeInput] = useState("");
+  const [highcapBridgeAdditionalInput, setHighcapBridgeAdditionalInput] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1235,18 +1262,21 @@ function KangbukApp() {
 
   const result = useMemo(() => {
     if (screen !== "result" && screen !== "pastResults") return null;
-    const perf = Number(perfInput.replace(/[^0-9]/g, "")) || 0;
-    const mainProductPerf = Number(mainProductInput.replace(/[^0-9]/g, "")) || 0;
-    const amchiPerf = Number(amchiPerfInput.replace(/[^0-9]/g, "")) || 0;
-    const amchiCount = Number(amchiCountInput.replace(/[^0-9]/g, "")) || 0;
-    const highcapBridgePerf = Number(highcapBridgeInput.replace(/[^0-9]/g, "")) || 0;
 
     const matches = findCodesByName(name);
     let resolvedCode = code.trim().toUpperCase();
     if (matches.length === 1) resolvedCode = matches[0];
 
+    const perfAdditional = Number(perfAdditionalInput.replace(/[^0-9]/g, "")) || 0;
+    const perf = getClosingPerf(resolvedCode) + perfAdditional;
+    const mainProductPerf = Number(mainProductInput.replace(/[^0-9]/g, "")) || 0;
+    const amchiPerf = Number(amchiPerfInput.replace(/[^0-9]/g, "")) || 0;
+    const amchiCount = Number(amchiCountInput.replace(/[^0-9]/g, "")) || 0;
+    const highcapBridgeAdditional = Number(highcapBridgeAdditionalInput.replace(/[^0-9]/g, "")) || 0;
+    const highcapBridgePerf = getHighcapBridgeClosingPerf(resolvedCode) + highcapBridgeAdditional;
+
     return computeAll(name.trim(), resolvedCode, perf, mainProductPerf, isOverride, amchiPerf, amchiCount, highcapBridgePerf);
-  }, [screen, name, code, perfInput, mainProductInput, isOverride, amchiPerfInput, amchiCountInput, highcapBridgeInput]);
+  }, [screen, name, code, perfAdditionalInput, mainProductInput, isOverride, amchiPerfInput, amchiCountInput, highcapBridgeAdditionalInput]);
 
   function handleSubmit() {
     setScreen("result");
@@ -1283,12 +1313,12 @@ function KangbukApp() {
         <InputScreen
           name={name} setName={setName}
           code={code} setCode={setCode}
-          perfInput={perfInput} setPerfInput={setPerfInput}
+          perfAdditionalInput={perfAdditionalInput} setPerfAdditionalInput={setPerfAdditionalInput}
           mainProductInput={mainProductInput} setMainProductInput={setMainProductInput}
           isOverride={isOverride} setIsOverride={setIsOverride}
           amchiPerfInput={amchiPerfInput} setAmchiPerfInput={setAmchiPerfInput}
           amchiCountInput={amchiCountInput} setAmchiCountInput={setAmchiCountInput}
-          highcapBridgeInput={highcapBridgeInput} setHighcapBridgeInput={setHighcapBridgeInput}
+          highcapBridgeAdditionalInput={highcapBridgeAdditionalInput} setHighcapBridgeAdditionalInput={setHighcapBridgeAdditionalInput}
           onSubmit={handleSubmit}
         />
       ) : (
@@ -1344,6 +1374,10 @@ const CSS = `
 .kb-field { display: flex; flex-direction: column; gap: 8px; }
 .kb-field__label { font-size: 16px; font-weight: 700; color: var(--kb-ink); }
 .kb-field__hint { font-size: 12.5px; font-weight: 500; color: var(--kb-gray); }
+.kb-field__baseline { font-size: 14px; color: var(--kb-ink); margin: -2px 0 2px; line-height: 1.5; }
+.kb-field__baseline strong { color: var(--kb-orange-dark); font-weight: 800; }
+.kb-field__total { font-size: 13.5px; color: var(--kb-gray); margin: 2px 0 0; }
+.kb-field__total strong { color: var(--kb-ink); font-weight: 800; }
 
 .kb-input { width: 100%; font-size: 19px; font-weight: 500; padding: 14px 16px; border-radius: 14px; border: 1.5px solid var(--kb-gray-light); background: var(--kb-ivory); color: var(--kb-ink); outline: none; font-family: inherit; }
 .kb-input:focus { border-color: var(--kb-orange); background: var(--kb-white); }
