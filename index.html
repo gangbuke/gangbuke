@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>강북이 | 8월 3주차 시상 가이드</title>
+<title>강북이 | 8월 4주차 시상 가이드</title>
 <meta name="description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="강북이 | 8월 3주차 시상 가이드" />
+<meta property="og:title" content="강북이 | 8월 4주차 시상 가이드" />
 <meta property="og:description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
-<meta property="og:image" content="https://gangbuke.github.io/gangbuke/thumbnail_week3.jpg" />
+<meta property="og:image" content="https://gangbuke.github.io/gangbuke/thumbnail_week4.jpg" />
 <meta property="og:image:width" content="1731" />
 <meta property="og:image:height" content="909" />
 <meta property="og:url" content="https://gangbuke.github.io/gangbuke/" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="강북이 | 8월 3주차 시상 가이드" />
+<meta name="twitter:title" content="강북이 | 8월 4주차 시상 가이드" />
 <meta name="twitter:description" content="현재 실적을 입력하고 이번 주 예상 시상금과 다음 목표를 확인해보세요." />
-<meta name="twitter:image" content="https://gangbuke.github.io/gangbuke/thumbnail_week3.jpg" />
+<meta name="twitter:image" content="https://gangbuke.github.io/gangbuke/thumbnail_week4.jpg" />
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2217%22 y=%2214%22 width=%2222%22 height=%2272%22 rx=%2211%22 fill=%22%23FF7A29%22/><rect x=%2261%22 y=%2214%22 width=%2222%22 height=%2272%22 rx=%2211%22 fill=%22%23FF7A29%22/><rect x=%2217%22 y=%2241%22 width=%2266%22 height=%2220%22 rx=%2210%22 fill=%22%23FF7A29%22/></svg>" />
 
@@ -46,10 +46,10 @@
 const { useState, useMemo, useEffect } = React;
 
 /* =========================================================================
-   강북이 — 강북지역단 8월 3주차 시상 가이드
+   강북이 — 강북지역단 8월 4주차 시상 가이드
    ========================================================================= */
 
-const APP_VERSION = "v3.0.0";
+const APP_VERSION = "v4.0.0";
 const FEEDBACK_FORM_URL = "https://naver.me/xNpbSD3X";
 
 function track(eventName, params) {
@@ -65,11 +65,12 @@ const ROSTER = [{"code":"1B7072","name":"정은선"},{"code":"1C8337","name":"�
 const WEEK1_RESULTS = {"1B7072":{"basic":131066,"vacation":70000},"129373":{"basic":263770,"vacation":140000},"147073":{"basic":100000,"vacation":70000},"1C2869":{"basic":150000,"vacation":70000},"1D4025":{"basic":166322,"vacation":70000},"1D8413":{"basic":100000,"vacation":70000},"1D8495":{"basic":50000,"vacation":70000},"782020":{"basic":196677,"vacation":70000},"933170":{"basic":50000,"vacation":0},"944006":{"basic":368957,"vacation":210000},"950830":{"basic":287703,"vacation":140000},"960492":{"basic":50000,"vacation":70000},"962243":{"basic":139932,"vacation":70000},"963802":{"basic":100000,"vacation":70000},"971919":{"basic":100000,"vacation":70000},"981943":{"basic":179127,"vacation":70000},"9A1566":{"basic":50000,"vacation":70000},"9A1687":{"basic":260286,"vacation":140000},"127758":{"basic":269516,"vacation":140000},"140255":{"basic":204204,"vacation":70000},"142608":{"basic":132301,"vacation":70000},"1C9783":{"basic":131235,"vacation":70000},"1D0541":{"basic":140192,"vacation":70000},"770260":{"basic":197730,"vacation":70000},"812400":{"basic":50000,"vacation":0},"831930":{"basic":168870,"vacation":70000},"928060":{"basic":167804,"vacation":70000},"958801":{"basic":50000,"vacation":0},"967315":{"basic":264667,"vacation":140000},"9A2578":{"basic":200000,"vacation":140000},"1C3857":{"basic":100000,"vacation":70000},"145341":{"basic":50000,"vacation":0},"1D7819":{"basic":50000,"vacation":0},"1D8709":{"basic":156403,"vacation":70000},"863360":{"basic":270959,"vacation":140000},"926330":{"basic":50000,"vacation":0},"950780":{"basic":200000,"vacation":140000},"950811":{"basic":200096,"vacation":70000},"973027":{"basic":261352,"vacation":140000},"107745":{"basic":50000,"vacation":70000},"152043":{"basic":50000,"vacation":0},"1D2532":{"basic":50000,"vacation":0},"952159":{"basic":391850,"vacation":210000},"970906":{"basic":181051,"vacation":70000},"952449":{"basic":204854,"vacation":70000},"9A1454":{"basic":205348,"vacation":70000},"1C1913":{"basic":132522,"vacation":70000},"1C2866":{"basic":50000,"vacation":0},"1D1041":{"basic":50000,"vacation":0},"1D4739":{"basic":422305,"vacation":210000},"1D4799":{"basic":314448,"vacation":140000},"1D5222":{"basic":418327,"vacation":210000},"1D5258":{"basic":50000,"vacation":0},"1D5707":{"basic":404287,"vacation":210000},"1D6103":{"basic":50000,"vacation":0},"1D6249":{"basic":402142,"vacation":210000},"1D6650":{"basic":400478,"vacation":210000},"1D7440":{"basic":406757,"vacation":210000},"1D7761":{"basic":50000,"vacation":0},"1D7823":{"basic":50000,"vacation":0},"1D7920":{"basic":200000,"vacation":140000},"1D8358":{"basic":403455,"vacation":210000},"1D8693":{"basic":100000,"vacation":70000},"959596":{"basic":50000,"vacation":0},"964120":{"basic":543374,"vacation":280000},"026550":{"basic":50000,"vacation":0},"1D6383":{"basic":100000,"vacation":70000},"1D9054":{"basic":310830,"vacation":140000},"788940":{"basic":261391,"vacation":140000},"894680":{"basic":50000,"vacation":0},"960106":{"basic":150709,"vacation":70000},"969037":{"basic":152477,"vacation":70000},"141396":{"basic":50000,"vacation":0},"1C5377":{"basic":50000,"vacation":0},"1C9622":{"basic":50000,"vacation":0},"962176":{"basic":50000,"vacation":0},"965830":{"basic":50000,"vacation":0},"913340":{"basic":50000,"vacation":0},"933690":{"basic":327951,"vacation":140000},"979895":{"basic":50000,"vacation":0},"027686":{"basic":50000,"vacation":0},"980803":{"basic":152438,"vacation":70000},"984581":{"basic":50000,"vacation":0},"135251":{"basic":50000,"vacation":0},"791340":{"basic":100000,"vacation":70000},"819840":{"basic":300000,"vacation":210000},"834920":{"basic":302796,"vacation":140000},"965255":{"basic":100000,"vacation":70000},"1C1425":{"basic":130494,"vacation":70000},"192452":{"basic":100000,"vacation":70000},"1C7798":{"basic":131105,"vacation":70000},"950420":{"basic":0,"vacation":70000},"961350":{"basic":262626,"vacation":140000},"964622":{"basic":150000,"vacation":70000},"988387":{"basic":156325,"vacation":70000},"1A1998":{"basic":0,"vacation":70000},"1C9974":{"basic":100000,"vacation":70000},"1D0159":{"basic":132054,"vacation":70000},"1D7648":{"basic":150098,"vacation":70000},"851580":{"basic":180000,"vacation":70000},"888620":{"basic":130000,"vacation":70000},"977729":{"basic":845611,"vacation":350000},"738740":{"basic":143910,"vacation":70000},"1A8720":{"basic":155948,"vacation":70000},"132511":{"basic":302640,"vacation":140000},"196005":{"basic":50000,"vacation":0},"197476":{"basic":50000,"vacation":0},"1B2571":{"basic":339261,"vacation":140000},"1D1609":{"basic":100000,"vacation":70000},"1D5656":{"basic":50000,"vacation":0},"1D7129":{"basic":50000,"vacation":0},"1C4073":{"basic":50000,"vacation":0},"9A1858":{"basic":50000,"vacation":0},"1C3254":{"basic":50000,"vacation":0},"042821":{"basic":302146,"vacation":140000},"1B9771":{"basic":50000,"vacation":0},"1C6120":{"basic":295559,"vacation":140000},"1D1693":{"basic":100000,"vacation":70000},"1D7388":{"basic":50000,"vacation":0},"1D8028":{"basic":353990,"vacation":140000},"954853":{"basic":100000,"vacation":70000},"985329":{"basic":293700,"vacation":140000},"069563":{"basic":100000,"vacation":70000},"111435":{"basic":254919,"vacation":140000},"1A7148":{"basic":50000,"vacation":0},"1A8706":{"basic":100000,"vacation":70000},"1C7504":{"basic":462800,"vacation":210000},"1D3092":{"basic":100000,"vacation":70000},"1D8881":{"basic":585741,"vacation":280000},"029077":{"basic":50000,"vacation":0},"036705":{"basic":50000,"vacation":0},"059513":{"basic":280748,"vacation":140000},"196605":{"basic":50000,"vacation":0},"1A0330":{"basic":100000,"vacation":70000},"1D1782":{"basic":100000,"vacation":70000},"1D6778":{"basic":218205,"vacation":70000},"1D6977":{"basic":148135,"vacation":70000},"967946":{"basic":141310,"vacation":70000},"985932":{"basic":203320,"vacation":70000},"976146":{"basic":577837,"vacation":280000},"983849":{"basic":100000,"vacation":70000},"042469":{"basic":50000,"vacation":70000},"103809":{"basic":50000,"vacation":0},"194584":{"basic":100000,"vacation":70000},"1D1603":{"basic":207051,"vacation":70000},"1D8712":{"basic":316160,"vacation":140000},"962289":{"basic":100000,"vacation":70000},"981468":{"basic":132002,"vacation":70000},"060147":{"basic":100000,"vacation":70000},"083107":{"basic":50000,"vacation":0},"115199":{"basic":50000,"vacation":0},"1B3778":{"basic":374274,"vacation":210000},"1C0354":{"basic":200000,"vacation":140000},"1D3795":{"basic":100000,"vacation":70000},"1D4639":{"basic":50000,"vacation":0},"1D6509":{"basic":0,"vacation":140000},"1D8323":{"basic":301171,"vacation":140000},"790130":{"basic":135109,"vacation":70000},"809890":{"basic":100000,"vacation":70000},"148856":{"basic":50000,"vacation":0},"1A5986":{"basic":50000,"vacation":0},"1A8749":{"basic":50000,"vacation":0},"1B2652":{"basic":261950,"vacation":140000},"1D7752":{"basic":130273,"vacation":70000},"1D8510":{"basic":130728,"vacation":70000},"858150":{"basic":163475,"vacation":70000},"958643":{"basic":136955,"vacation":70000},"107912":{"basic":50000,"vacation":0},"1A3737":{"basic":195845,"vacation":70000},"981302":{"basic":50000,"vacation":0},"1B3337":{"basic":1256203,"vacation":350000},"1C4995":{"basic":200000,"vacation":140000},"134939":{"basic":556478,"vacation":280000},"135559":{"basic":100000,"vacation":70000},"198931":{"basic":100000,"vacation":70000},"1A2077":{"basic":150000,"vacation":70000},"1C2997":{"basic":50000,"vacation":0},"1D6760":{"basic":226512,"vacation":70000},"1D8713":{"basic":50000,"vacation":0},"962854":{"basic":50000,"vacation":0},"981638":{"basic":268255,"vacation":140000},"1B5008":{"basic":50000,"vacation":0},"1C0703":{"basic":50000,"vacation":0},"1C4186":{"basic":50000,"vacation":0},"1C8877":{"basic":211263,"vacation":70000},"1D0718":{"basic":453899,"vacation":280000},"1D5535":{"basic":215007,"vacation":70000},"1D8714":{"basic":304555,"vacation":140000},"961147":{"basic":196937,"vacation":70000},"082728":{"basic":100000,"vacation":70000},"138167":{"basic":130975,"vacation":70000},"149001":{"basic":50000,"vacation":0},"1A9865":{"basic":496600,"vacation":210000},"1B0912":{"basic":316446,"vacation":140000},"1C7548":{"basic":595140,"vacation":280000},"1C9360":{"basic":100000,"vacation":70000},"1C9784":{"basic":50000,"vacation":0},"1D1120":{"basic":174759,"vacation":70000},"1D2198":{"basic":50000,"vacation":0},"1D4083":{"basic":50000,"vacation":0},"1D5645":{"basic":427288,"vacation":210000},"1D8137":{"basic":176722,"vacation":70000},"1D8990":{"basic":50000,"vacation":0},"1B8736":{"basic":148967,"vacation":70000},"042099":{"basic":100000,"vacation":70000},"158505":{"basic":100000,"vacation":70000},"158988":{"basic":143182,"vacation":70000},"1A6444":{"basic":426283,"vacation":210000},"1B4252":{"basic":312650,"vacation":140000},"1B9235":{"basic":148226,"vacation":70000},"960582":{"basic":100000,"vacation":70000},"075682":{"basic":421057,"vacation":210000},"1A0219":{"basic":134290,"vacation":70000},"1B9404":{"basic":50000,"vacation":70000},"961330":{"basic":503580,"vacation":280000},"044339":{"basic":295000,"vacation":210000},"105122":{"basic":175929,"vacation":70000},"1A1986":{"basic":145106,"vacation":70000},"1A9104":{"basic":142727,"vacation":70000},"9A7084":{"basic":530816,"vacation":280000},"056812":{"basic":100000,"vacation":70000},"079654":{"basic":50000,"vacation":0},"191193":{"basic":622764,"vacation":350000},"1A0324":{"basic":521586,"vacation":280000},"1A0325":{"basic":100000,"vacation":70000},"1B0485":{"basic":322400,"vacation":140000},"1D0988":{"basic":50000,"vacation":0},"1D3677":{"basic":520156,"vacation":280000},"1D6794":{"basic":200000,"vacation":140000},"1D7152":{"basic":378382,"vacation":210000},"1D7600":{"basic":50000,"vacation":0},"1D8658":{"basic":50000,"vacation":0},"1D8659":{"basic":50000,"vacation":0},"1D8661":{"basic":142831,"vacation":70000},"1D8808":{"basic":50000,"vacation":0},"1D9026":{"basic":50000,"vacation":0},"963035":{"basic":100000,"vacation":70000},"123922":{"basic":50000,"vacation":0},"1A7533":{"basic":50000,"vacation":0},"1D8680":{"basic":50000,"vacation":0},"832050":{"basic":474357,"vacation":210000},"958942":{"basic":100000,"vacation":70000},"965706":{"basic":100000,"vacation":70000},"970099":{"basic":271895,"vacation":140000},"9A6234":{"basic":200000,"vacation":210000},"139888":{"basic":166816,"vacation":70000},"157167":{"basic":132327,"vacation":70000},"1A1452":{"basic":443001,"vacation":210000},"1A7430":{"basic":50000,"vacation":0},"1B0796":{"basic":264500,"vacation":140000},"1D3572":{"basic":311428,"vacation":140000},"1D7545":{"basic":261885,"vacation":140000},"1D8306":{"basic":390130,"vacation":210000},"953570":{"basic":50000,"vacation":0},"961808":{"basic":222651,"vacation":70000},"142760":{"basic":271050,"vacation":140000},"1C9092":{"basic":317629,"vacation":140000},"1D6743":{"basic":225953,"vacation":70000},"968469":{"basic":300000,"vacation":210000},"052626":{"basic":130117,"vacation":70000},"108631":{"basic":50000,"vacation":0},"1C8244":{"basic":165347,"vacation":70000},"1D8490":{"basic":132288,"vacation":70000},"935430":{"basic":473702,"vacation":280000},"9A1763":{"basic":261170,"vacation":140000},"057895":{"basic":0,"vacation":70000},"119150":{"basic":372385,"vacation":210000},"138961":{"basic":50000,"vacation":0},"150708":{"basic":200000,"vacation":140000},"1C4584":{"basic":50000,"vacation":0},"1D7546":{"basic":100000,"vacation":70000},"1D8696":{"basic":50000,"vacation":0},"1A1798":{"basic":50000,"vacation":0},"1B5914":{"basic":50000,"vacation":0},"968285":{"basic":100000,"vacation":70000},"972566":{"basic":50000,"vacation":0},"095556":{"basic":166296,"vacation":70000},"195519":{"basic":201851,"vacation":70000},"1A5739":{"basic":131846,"vacation":70000},"1B5011":{"basic":136799,"vacation":70000},"1B9506":{"basic":100000,"vacation":70000},"1C5435":{"basic":140400,"vacation":70000},"972571":{"basic":100000,"vacation":70000},"193037":{"basic":50000,"vacation":0},"1A6442":{"basic":376586,"vacation":210000},"1A6934":{"basic":100000,"vacation":70000},"1B6601":{"basic":50000,"vacation":0},"1D7741":{"basic":50000,"vacation":0},"1D8472":{"basic":50000,"vacation":0},"1D9128":{"basic":100000,"vacation":70000},"970680":{"basic":311261,"vacation":210000},"065096":{"basic":100000,"vacation":70000},"1B7338":{"basic":50000,"vacation":0},"1C6230":{"basic":100000,"vacation":70000},"1C7991":{"basic":50000,"vacation":0},"1D4486":{"basic":50000,"vacation":0},"1D9097":{"basic":303719,"vacation":140000},"1D9129":{"basic":50000,"vacation":0},"9A6233":{"basic":7506073,"vacation":350000},"1C5828":{"basic":100000,"vacation":70000},"146376":{"basic":507533,"vacation":210000},"190250":{"basic":257673,"vacation":70000},"1C7914":{"basic":100000,"vacation":70000},"1D4316":{"basic":280098,"vacation":140000},"961939":{"basic":200000,"vacation":140000},"977302":{"basic":535652,"vacation":280000},"148001":{"basic":163124,"vacation":70000},"1A7906":{"basic":248109,"vacation":140000},"1B0426":{"basic":257662,"vacation":140000},"1C7353":{"basic":50000,"vacation":0},"1C7925":{"basic":50000,"vacation":0},"1C8106":{"basic":50000,"vacation":0},"1D1735":{"basic":146952,"vacation":70000},"1D6466":{"basic":50000,"vacation":0},"1D7131":{"basic":50000,"vacation":0},"1D9068":{"basic":177567,"vacation":70000}}; // code -> {basic, vacation} (8/7(금) 마감, 브릿지 제외)
 const WEEK2_RESULTS = {"129373":{"basic":0,"highcap20":200890,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"153029":{"basic":0,"highcap20":21540,"mainprod":0},"159789":{"basic":0,"highcap20":133350,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C2869":{"basic":0,"highcap20":21070,"mainprod":0},"1D4025":{"basic":0,"highcap20":99990,"mainprod":0,"gifts":["궁중팬"]},"846680":{"basic":0,"highcap20":50340,"mainprod":0,"gifts":["궁중팬"]},"911670":{"basic":0,"highcap20":100210,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"944006":{"basic":0,"highcap20":18910,"mainprod":0},"951272":{"basic":0,"highcap20":109370,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"960492":{"basic":0,"highcap20":61460,"mainprod":0,"gifts":["궁중팬"]},"962243":{"basic":0,"highcap20":169780,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"963802":{"basic":0,"highcap20":71720,"mainprod":0,"gifts":["궁중팬"]},"971919":{"basic":47832,"highcap20":254450,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"981943":{"basic":0,"highcap20":21070,"mainprod":0},"127758":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"140255":{"basic":62172,"highcap20":44270,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"142608":{"basic":0,"highcap20":111950,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C0313":{"basic":63048,"highcap20":21340,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C9783":{"basic":0,"highcap20":21910,"mainprod":0},"1D0541":{"basic":0,"highcap20":18550,"mainprod":0},"1D3460":{"basic":160000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"770260":{"basic":0,"highcap20":19600,"mainprod":0},"812400":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"954848":{"basic":0,"highcap20":196150,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"960124":{"basic":0,"highcap20":102350,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"963944":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"966001":{"basic":6556,"highcap20":112020,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"967315":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"971503":{"basic":0,"highcap20":102310,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"9A2578":{"basic":0,"highcap20":161900,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"145341":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C0995":{"basic":0,"highcap20":21570,"mainprod":0},"1D7819":{"basic":17529,"highcap20":22510,"mainprod":0,"gifts":["궁중팬"]},"1D8709":{"basic":0,"highcap20":85910,"mainprod":0,"gifts":["궁중팬"]},"950780":{"basic":0,"highcap20":122210,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"950811":{"basic":86239,"highcap20":135950,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"964926":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"973027":{"basic":160000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"107745":{"basic":0,"highcap20":108900,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"152043":{"basic":0,"highcap20":27680,"mainprod":0},"1D2532":{"basic":0,"highcap20":115610,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"846940":{"basic":0,"highcap20":188130,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"922290":{"basic":147940,"highcap20":20620,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"952159":{"basic":0,"highcap20":16840,"mainprod":0},"970906":{"basic":0,"highcap20":307310,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"9A1686":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"9A1454":{"basic":39225,"highcap20":62370,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C1913":{"basic":0,"highcap20":66110,"mainprod":0,"gifts":["궁중팬"]},"1C4091":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"1D2681":{"basic":0,"highcap20":54800,"mainprod":0,"gifts":["궁중팬"]},"1D4799":{"basic":0,"highcap20":243160,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1D5939":{"basic":17526,"highcap20":21350,"mainprod":0,"gifts":["궁중팬"]},"1D5964":{"basic":0,"highcap20":87070,"mainprod":0,"gifts":["궁중팬"]},"723920":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"952459":{"basic":41904,"highcap20":592050,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"964120":{"basic":66096,"highcap20":261760,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g","순금 0.3g","돼지갈비 1.5g"]},"026550":{"basic":0,"highcap20":31580,"mainprod":0},"137121":{"basic":246608,"highcap20":30660,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"155102":{"basic":0,"highcap20":51120,"mainprod":0,"gifts":["궁중팬"]},"1C8699":{"basic":0,"highcap20":109030,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"894680":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"960106":{"basic":0,"highcap20":111620,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"967718":{"basic":0,"highcap20":122920,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"969037":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"979094":{"basic":260928,"highcap20":0,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"127858":{"basic":0,"highcap20":51350,"mainprod":0,"gifts":["궁중팬"]},"1C9622":{"basic":4336,"highcap20":174500,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"946143":{"basic":61617,"highcap20":35260,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"962176":{"basic":0,"highcap20":101550,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"976310":{"basic":17749,"highcap20":240430,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"195561":{"basic":59847,"highcap20":30470,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D5717":{"basic":0,"highcap20":120500,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D7232":{"basic":0,"highcap20":61200,"mainprod":0,"gifts":["궁중팬"]},"737400":{"basic":93736,"highcap20":84950,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"913340":{"basic":6230,"highcap20":117330,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"933690":{"basic":0,"highcap20":18270,"mainprod":0},"970755":{"basic":16435,"highcap20":23530,"mainprod":0,"gifts":["궁중팬"]},"979895":{"basic":0,"highcap20":50620,"mainprod":0,"gifts":["궁중팬"]},"027686":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"147074":{"basic":23427,"highcap20":21320,"mainprod":0,"gifts":["궁중팬"]},"915890":{"basic":0,"highcap20":70440,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"928780":{"basic":16520,"highcap20":36960,"mainprod":0,"gifts":["궁중팬"]},"948622":{"basic":0,"highcap20":101720,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"980803":{"basic":88422,"highcap20":118000,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"984581":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"135251":{"basic":0,"highcap20":88500,"mainprod":0,"gifts":["궁중팬"]},"1C2941":{"basic":49018,"highcap20":44660,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"762440":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"834920":{"basic":0,"highcap20":38490,"mainprod":0},"943575":{"basic":4969,"highcap20":64470,"mainprod":0,"gifts":["궁중팬"]},"949156":{"basic":61779,"highcap20":24980,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"965255":{"basic":0,"highcap20":87650,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C1425":{"basic":0,"highcap20":113780,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"110862":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"192452":{"basic":6334,"highcap20":55290,"mainprod":0,"gifts":["궁중팬"]},"1C9140":{"basic":0,"highcap20":100690,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D3227":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"950420":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"961350":{"basic":10916,"highcap20":126570,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"964622":{"basic":0,"highcap20":131730,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"981626":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"988387":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C9974":{"basic":0,"highcap20":117220,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D0158":{"basic":0,"highcap20":119920,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D4896":{"basic":0,"highcap20":22310,"mainprod":0},"1D7446":{"basic":0,"highcap20":30830,"mainprod":0},"851580":{"basic":0,"highcap20":18820,"mainprod":0},"888620":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"977729":{"basic":311230,"highcap20":198640,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g","돼지갈비 1.5g"]},"710870":{"basic":0,"highcap20":61920,"mainprod":0,"gifts":["궁중팬"]},"738740":{"basic":0,"highcap20":24710,"mainprod":0},"132511":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"197476":{"basic":0,"highcap20":65780,"mainprod":0,"gifts":["궁중팬"]},"1B2571":{"basic":313776,"highcap20":0,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1B2831":{"basic":0,"highcap20":20510,"mainprod":0},"1D1609":{"basic":160000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1D7129":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"194005":{"basic":160000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"194472":{"basic":62711,"highcap20":181820,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1A4154":{"basic":0,"highcap20":125210,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C4073":{"basic":0,"highcap20":22620,"mainprod":0},"1C6397":{"basic":160000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1C9656":{"basic":0,"highcap20":100620,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C9922":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"1D5655":{"basic":0,"highcap20":142650,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D7913":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D9053":{"basic":0,"highcap20":101500,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D9082":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"9A1858":{"basic":0,"highcap20":52290,"mainprod":0,"gifts":["궁중팬"]},"1C3254":{"basic":0,"highcap20":54770,"mainprod":0,"gifts":["궁중팬"]},"042821":{"basic":22755,"highcap20":77810,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B9771":{"basic":14801,"highcap20":206600,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1C4712":{"basic":0,"highcap20":20020,"mainprod":0},"1C6120":{"basic":68428,"highcap20":19540,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D1693":{"basic":0,"highcap20":19310,"mainprod":0},"1D1695":{"basic":0,"highcap20":21720,"mainprod":0},"1D4635":{"basic":167832,"highcap20":212590,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1D5544":{"basic":0,"highcap20":23870,"mainprod":0},"1D7388":{"basic":0,"highcap20":36380,"mainprod":0},"1D8028":{"basic":0,"highcap20":92950,"mainprod":0,"gifts":["궁중팬"]},"954853":{"basic":65611,"highcap20":21930,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"960964":{"basic":0,"highcap20":161500,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"964882":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"985329":{"basic":67106,"highcap20":20680,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"111435":{"basic":40067,"highcap20":50570,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A7148":{"basic":0,"highcap20":21750,"mainprod":0},"1C1191":{"basic":0,"highcap20":141370,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C7504":{"basic":0,"highcap20":43490,"mainprod":0},"1D0809":{"basic":0,"highcap20":22510,"mainprod":0},"1D8881":{"basic":0,"highcap20":28270,"mainprod":0},"029077":{"basic":0,"highcap20":61530,"mainprod":0,"gifts":["궁중팬"]},"036705":{"basic":0,"highcap20":20500,"mainprod":0},"059513":{"basic":0,"highcap20":117570,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"070041":{"basic":0,"highcap20":17190,"mainprod":0},"147775":{"basic":23851,"highcap20":18930,"mainprod":0,"gifts":["궁중팬"]},"196605":{"basic":0,"highcap20":42320,"mainprod":0},"1A0330":{"basic":33705,"highcap20":73140,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D1782":{"basic":0,"highcap20":82010,"mainprod":0,"gifts":["궁중팬"]},"1D6977":{"basic":0,"highcap20":20730,"mainprod":0},"1D9220":{"basic":160000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"952291":{"basic":0,"highcap20":21370,"mainprod":0},"961477":{"basic":0,"highcap20":100240,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"976146":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"983849":{"basic":0,"highcap20":37960,"mainprod":0},"000008":{"basic":0,"highcap20":111690,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원","돼지갈비 1.5g"]},"035673":{"basic":0,"highcap20":24980,"mainprod":0},"042469":{"basic":0,"highcap20":21010,"mainprod":0},"090367":{"basic":0,"highcap20":128830,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"101650":{"basic":0,"highcap20":16380,"mainprod":0},"103809":{"basic":0,"highcap20":53860,"mainprod":0,"gifts":["궁중팬"]},"137506":{"basic":58305,"highcap20":38930,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"981468":{"basic":14681,"highcap20":44920,"mainprod":0,"gifts":["궁중팬"]},"076134":{"basic":35438,"highcap20":101990,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"112900":{"basic":68963,"highcap20":23870,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"115199":{"basic":0,"highcap20":68190,"mainprod":0,"gifts":["궁중팬"]},"193967":{"basic":0,"highcap20":16630,"mainprod":0},"1B3778":{"basic":0,"highcap20":22100,"mainprod":0},"1C0354":{"basic":89447,"highcap20":119750,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1D1370":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"1D3795":{"basic":65512,"highcap20":18250,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D4639":{"basic":0,"highcap20":18760,"mainprod":0},"1D5519":{"basic":0,"highcap20":19790,"mainprod":0},"1D8138":{"basic":0,"highcap20":76560,"mainprod":0,"gifts":["궁중팬"]},"1D8323":{"basic":0,"highcap20":22880,"mainprod":0},"1D8586":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"790130":{"basic":0,"highcap20":21390,"mainprod":0},"809890":{"basic":0,"highcap20":51660,"mainprod":0,"gifts":["궁중팬"]},"1B8255":{"basic":33192,"highcap20":59510,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"148856":{"basic":39786,"highcap20":95170,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A4888":{"basic":0,"highcap20":21380,"mainprod":0},"1A5986":{"basic":0,"highcap20":21970,"mainprod":0},"1A8749":{"basic":0,"highcap20":56510,"mainprod":0,"gifts":["궁중팬"]},"1B5693":{"basic":153536,"highcap20":266810,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1C8372":{"basic":0,"highcap20":104470,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C8883":{"basic":0,"highcap20":22340,"mainprod":0},"1C9334":{"basic":0,"highcap20":21170,"mainprod":0},"858150":{"basic":67161,"highcap20":22260,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"958643":{"basic":146966,"highcap20":22120,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"959423":{"basic":123048,"highcap20":198460,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"962036":{"basic":0,"highcap20":137770,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"986778":{"basic":33975,"highcap20":231900,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"132742":{"basic":0,"highcap20":20360,"mainprod":0},"940430":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B3337":{"basic":338960,"highcap20":0,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1C4995":{"basic":0,"highcap20":138930,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"134939":{"basic":0,"highcap20":116700,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원","돼지갈비 1.5g"]},"198931":{"basic":0,"highcap20":55170,"mainprod":0,"gifts":["궁중팬"]},"1A2077":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"1D6483":{"basic":18241,"highcap20":22800,"mainprod":0,"gifts":["궁중팬"]},"1D6760":{"basic":0,"highcap20":32580,"mainprod":0},"1D8713":{"basic":0,"highcap20":206070,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"962854":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"127319":{"basic":0,"highcap20":10290,"mainprod":0},"133755":{"basic":0,"highcap20":37540,"mainprod":0},"135132":{"basic":7763,"highcap20":93040,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B5008":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C0703":{"basic":0,"highcap20":193370,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C4186":{"basic":226064,"highcap20":38260,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1D6554":{"basic":0,"highcap20":168500,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D8714":{"basic":0,"highcap20":208790,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"961147":{"basic":71302,"highcap20":16530,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"082728":{"basic":15134,"highcap20":89320,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"149001":{"basic":0,"highcap20":32070,"mainprod":0},"1A9865":{"basic":10895,"highcap20":53080,"mainprod":0,"gifts":["궁중팬"]},"1C3318":{"basic":0,"highcap20":114570,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C7548":{"basic":8000,"highcap20":314600,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1D8137":{"basic":0,"highcap20":15050,"mainprod":0},"1B8736":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"158505":{"basic":0,"highcap20":134580,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"158988":{"basic":0,"highcap20":21250,"mainprod":0},"1A6444":{"basic":28274,"highcap20":187890,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1B4252":{"basic":0,"highcap20":125930,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B9235":{"basic":0,"highcap20":82510,"mainprod":0,"gifts":["궁중팬"]},"075682":{"basic":0,"highcap20":50310,"mainprod":0,"gifts":["궁중팬"]},"193673":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B9404":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"1D0784":{"basic":0,"highcap20":22920,"mainprod":0},"1D3917":{"basic":0,"highcap20":50020,"mainprod":0,"gifts":["궁중팬"]},"1D4305":{"basic":0,"highcap20":57830,"mainprod":0,"gifts":["궁중팬"]},"1D7968":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D8328":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"044339":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"105122":{"basic":0,"highcap20":182740,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"134696":{"basic":0,"highcap20":100270,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"145688":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A0306":{"basic":0,"highcap20":54920,"mainprod":0,"gifts":["궁중팬"]},"1A1986":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A9104":{"basic":0,"highcap20":20450,"mainprod":0},"1D3860":{"basic":0,"highcap20":26080,"mainprod":0},"1D5025":{"basic":0,"highcap20":23580,"mainprod":0},"1D8687":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"9A7084":{"basic":34154,"highcap20":69250,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A7501":{"basic":0,"highcap20":116900,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"048184":{"basic":0,"highcap20":20990,"mainprod":0},"056812":{"basic":88914,"highcap20":100000,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"191193":{"basic":74368,"highcap20":233420,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1A0324":{"basic":69007,"highcap20":22370,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A0325":{"basic":0,"highcap20":77170,"mainprod":0,"gifts":["궁중팬"]},"1B0485":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"1D4479":{"basic":0,"highcap20":358630,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1D6794":{"basic":17632,"highcap20":21380,"mainprod":0,"gifts":["궁중팬"]},"1D7152":{"basic":50846,"highcap20":60260,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D7419":{"basic":0,"highcap20":22100,"mainprod":0},"1D8658":{"basic":0,"highcap20":22100,"mainprod":0},"1D8659":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D8661":{"basic":61176,"highcap20":23530,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D8808":{"basic":0,"highcap20":22100,"mainprod":0},"1D9026":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"860670":{"basic":6951,"highcap20":54970,"mainprod":0,"gifts":["궁중팬"]},"963002":{"basic":60173,"highcap20":42960,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D6793":{"basic":0,"highcap20":22820,"mainprod":0},"1D9147":{"basic":0,"highcap20":242260,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"958942":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"9A6234":{"basic":70049,"highcap20":17800,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"132741":{"basic":267912,"highcap20":0,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"139888":{"basic":0,"highcap20":107040,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"157167":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B0796":{"basic":144182,"highcap20":21390,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1D3572":{"basic":0,"highcap20":69740,"mainprod":0,"gifts":["궁중팬"]},"1D4277":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D7545":{"basic":0,"highcap20":104350,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D8346":{"basic":450320,"highcap20":0,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"142760":{"basic":0,"highcap20":238160,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1C1516":{"basic":0,"highcap20":35750,"mainprod":0},"1C9092":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"958207":{"basic":19048,"highcap20":76220,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"985336":{"basic":0,"highcap20":95380,"mainprod":0,"gifts":["궁중팬"]},"052626":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"190332":{"basic":0,"highcap20":52740,"mainprod":0,"gifts":["궁중팬"]},"191202":{"basic":0,"highcap20":21250,"mainprod":0},"1C8244":{"basic":30000,"highcap20":0,"mainprod":0,"gifts":["궁중팬"]},"1D7496":{"basic":0,"highcap20":105550,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"943620":{"basic":0,"highcap20":277090,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"972526":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"9A1763":{"basic":0,"highcap20":874790,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"9A1764":{"basic":0,"highcap20":129830,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"057895":{"basic":37094,"highcap20":87280,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"119150":{"basic":0,"highcap20":59780,"mainprod":0,"gifts":["궁중팬"]},"138961":{"basic":0,"highcap20":174650,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"153515":{"basic":0,"highcap20":18410,"mainprod":0},"1C4584":{"basic":0,"highcap20":20940,"mainprod":0},"1D8184":{"basic":0,"highcap20":52500,"mainprod":0,"gifts":["궁중팬"]},"1D8677":{"basic":0,"highcap20":58570,"mainprod":0,"gifts":["궁중팬"]},"1D8696":{"basic":63272,"highcap20":22900,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A1798":{"basic":45314,"highcap20":82760,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A0001":{"basic":0,"highcap20":130160,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"095556":{"basic":0,"highcap20":72010,"mainprod":0,"gifts":["궁중팬"]},"195519":{"basic":108667,"highcap20":65840,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1A5739":{"basic":0,"highcap20":155210,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원","올영 3만원","돼지갈비 1.5g"]},"1B5011":{"basic":18642,"highcap20":20920,"mainprod":0,"gifts":["궁중팬"]},"1B9506":{"basic":86433,"highcap20":100800,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1C5435":{"basic":5243,"highcap20":142560,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D8595":{"basic":226096,"highcap20":69350,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g","순금 0.2g"]},"972571":{"basic":8072,"highcap20":110130,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"140436":{"basic":177704,"highcap20":119600,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"193037":{"basic":160000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1A6442":{"basic":0,"highcap20":58400,"mainprod":0,"gifts":["궁중팬"]},"1D7741":{"basic":140417,"highcap20":28280,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1D8472":{"basic":0,"highcap20":48950,"mainprod":0},"1D9128":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"970680":{"basic":186280,"highcap20":176560,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"065096":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B7338":{"basic":67014,"highcap20":26070,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C6230":{"basic":0,"highcap20":20990,"mainprod":0},"1C7907":{"basic":11050,"highcap20":41670,"mainprod":0,"gifts":["궁중팬"]},"1C7991":{"basic":0,"highcap20":20820,"mainprod":0},"1D0546":{"basic":27208,"highcap20":70100,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D1008":{"basic":6895,"highcap20":42590,"mainprod":0,"gifts":["궁중팬"]},"1D1010":{"basic":0,"highcap20":22000,"mainprod":0},"1D4486":{"basic":0,"highcap20":82790,"mainprod":0,"gifts":["궁중팬"]},"1D9129":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1D9241":{"basic":160000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"9A6233":{"basic":216040,"highcap20":199760,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"1C5828":{"basic":0,"highcap20":18980,"mainprod":0},"190250":{"basic":56479,"highcap20":49140,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A2606":{"basic":0,"highcap20":100160,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B7018":{"basic":48795,"highcap20":57330,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C7914":{"basic":0,"highcap20":22020,"mainprod":0},"1D4255":{"basic":0,"highcap20":18440,"mainprod":0},"1D4316":{"basic":0,"highcap20":22680,"mainprod":0},"1D5274":{"basic":0,"highcap20":18250,"mainprod":0},"961939":{"basic":0,"highcap20":270730,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g"]},"977302":{"basic":166256,"highcap20":324600,"mainprod":0,"gifts":["궁중팬","밥솥or골드바0.6g","순금 0.2g","돼지갈비 1.5g"]},"148001":{"basic":13232,"highcap20":40030,"mainprod":0,"gifts":["궁중팬"]},"149019":{"basic":65674,"highcap20":18620,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1A7906":{"basic":51816,"highcap20":58330,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B0426":{"basic":0,"highcap20":21890,"mainprod":0},"1C7353":{"basic":4249,"highcap20":178240,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C7925":{"basic":0,"highcap20":22200,"mainprod":0},"1C8106":{"basic":0,"highcap20":127880,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원","돼지갈비 1.5g"]},"1D1734":{"basic":0,"highcap20":52280,"mainprod":0,"gifts":["궁중팬"]},"1D1735":{"basic":0,"highcap20":22130,"mainprod":0},"1D6466":{"basic":0,"highcap20":64670,"mainprod":0,"gifts":["궁중팬"]},"1D7131":{"basic":0,"highcap20":19000,"mainprod":0},"1D9068":{"basic":0,"highcap20":100860,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1B9523":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]},"1C1843":{"basic":15826,"highcap20":45340,"mainprod":0,"gifts":["궁중팬","전자레인지or올영12만원"]},"1D3216":{"basic":80000,"highcap20":0,"mainprod":0,"gifts":["궁중팬","이불세트or올영6만원"]}}; // code -> {basic, highcap20, mainprod, gifts?} (8/14(금) 마감, 브릿지 제외)
 
-/* 3주차 마감실적 — 아직 실제 데이터 없음. 나중에 관리자님이 주시는 데이터로
-   이 객체만 채우면 이번 주 실적이 자동으로 반영됩니다. (코드 -> 원 단위 금액) */
-const WEEKLY_CLOSING_PERF = {"147073":10000,"159789":145140,"952581":29830,"980663":125810,"127758":241840,"806400":23320,"928060":293300,"967315":90850,"1C3857":92440,"154870":101150,"1D7819":95140,"922290":41640,"952159":118080,"9A1454":86350,"1D7920":36500,"952459":18440,"959596":36450,"155102":57710,"1C3494":50000,"1C8699":30060,"788940":26620,"141396":51870,"1A4155":26640,"962176":50260,"737400":20430,"979895":80230,"980803":121060,"984581":131160,"986054":21000,"834920":19940,"943575":210980,"192452":55290,"1C7798":18210,"1C6118":130120,"1D7648":44970,"977729":54550,"738740":113120,"132511":53040,"197476":97980,"1D7129":55240,"042821":109340,"954853":50000,"960964":136820,"069563":32280,"1A8706":140980,"1C1191":92820,"1D3092":85130,"1D4123":19310,"059513":218860,"147775":85970,"1D0411":51440,"1D1782":132700,"1D6778":18000,"1D6977":33230,"000008":256830,"194584":58460,"060147":24980,"115199":61090,"1D1370":103850,"790130":47050,"981466":103610,"1B5693":20960,"1C7371":66900,"1D7752":29950,"858150":57500,"986778":127780,"134939":170850,"198931":158900,"1C2997":24850,"962854":123260,"127319":21330,"1D9195":242690,"138167":143910,"1C3318":135170,"1C7548":10000,"1D4083":220330,"1A6444":20210,"1B9235":174500,"960582":171550,"138814":35270,"1B9404":45130,"053665":155440,"1A1986":130620,"1D5025":43690,"9A7084":273440,"1A7533":15000,"965706":131090,"894280":51440,"108631":115830,"057895":100000,"067035":59490,"119150":53840,"150708":38090,"1A1798":20000,"1B5914":70200,"1A5739":11850,"1A6934":117500,"1B6601":188950,"970680":83000,"065096":81860,"1C7907":34120,"9A6233":104950,"1D4121":20000,"1A7906":156790,"1B0426":51900,"1C7925":90640,"1B9523":12570}; // code -> 원 (0원인 사람은 데이터에 없음, 조회시 기본값 0)
-const WEEKLY_CLOSING_LABEL = "8월 19일(수) 14시 30분 마감 기준";
+/* 4주차(8/22~) 마감실적 — 3주차와는 완전히 다른 새 기간이라 0부터 다시 시작.
+   나중에 4주차 마감 데이터를 주시면 이 객체만 채우면 자동 반영됩니다. */
+const WEEKLY_CLOSING_PERF = {}; // code -> 원
+const WEEKLY_CLOSING_LABEL = "마감 데이터 업데이트 예정";
 
+/* 고하이캡 브릿지는 8월 3~4주차에 걸친 연속 조건이라 3주차 마감 데이터를 그대로 이어서 사용 */
 const HIGHCAP_BRIDGE_CLOSING_PERF = {"1D7129":55240,"1D3092":85130,"069563":32280,"1A8706":116230,"1D4123":19310,"1C1191":52640,"059513":218860,"147775":85970,"1D1782":115870,"1D0411":51440,"970680":83000,"1B6601":188950,"154870":101150,"1B9235":174500,"1B9404":45130,"9A7084":273440,"053665":155440,"194584":58460,"790130":47050,"981466":103610,"1D1370":103850,"060147":24980,"986778":127780,"858150":57500,"1C7371":66900,"981302":25760,"962854":123260,"127319":21330,"1C3318":114570,"959596":36450,"1D7920":36500,"1C8699":30060,"788940":26620,"962176":50260,"141396":51870,"894280":51440,"108631":57440,"150708":38090,"067035":31560,"1B5914":70200,"965706":72120,"737400":20430,"980803":121060,"834920":19940,"943575":19000,"1D7648":44970,"977729":54550,"1A7906":32090,"1B0426":51900,"980663":125810,"127758":175280,"928060":293300,"806400":23320}; // code -> 원
 const HIGHCAP_BRIDGE_CLOSING_LABEL = "8월 18일(화) 마감 기준";
 
@@ -84,37 +85,29 @@ const POSTERS = {
   week1: { label: "8월 1주차", file: "poster_week1.jpg" },
   week2: { label: "8월 2주차", file: "poster_week2.jpg" },
   week3: { label: "8월 3주차", file: "poster_week3.jpg" },
+  week4: { label: "8월 4주차", file: "poster_week4.jpg" },
 };
 const RECRUIT_POSTER = { file: "poster_recruit.jpg" };
 
-/* ------------------------------------------------------------ AWARD CONFIG */
+/* ------------------------------------------------------------ AWARD CONFIG
+   4주차부터 기본시상과 주력상품시상은 "혼합 공식"이 아니라 완전히 별도로 더해짐
+   (2026-08 확정). 가을맞이 사은품·비암치플랜은 3주차 한정 프로모션으로 종료됨. */
 const AWARD_CONFIG = {
-  giftSmall: { minPerf: 50000, item: "바데니고 10CM 미니 고데기(무선)", icon: "💇" },
-  giftTiers: [
-    { min: 300000, item: "테팔 무선청소기", icon: "🧹" },
-    { min: 200000, item: "필립스 에어프라이기", icon: "🍟" },
-    { min: 100000, item: "정관장 홍삼활기력", icon: "🌿" },
-  ],
   basicFixedTiers: [
-    { min: 200000, max: 300000, amount: 120000 },
-    { min: 100000, max: 200000, amount: 60000 },
-    { min: 50000, max: 100000, amount: 20000 },
+    { min: 100000, max: 200000, amount: 40000 },
+    { min: 200000, max: 300000, amount: 80000 },
   ],
   basicTopMin: 300000,
-  basicTopRateOther: 0.6,
-  basicTopRateMain: 1.0,
+  basicTopRateOther: 0.4,
   basicOverrideRate: 1.0,
-  amchiTiers: [
-    { min: 100000, amount: 100000 },
-    { min: 50000, max: 100000, amount: 50000 },
-    { min: 20000, max: 50000, amount: 20000 },
-  ],
-  amchiChickenMinCount: 3,
+  mainProductRate: 1.0,
   highcapBridgeAmounts: { 100000: 500000, 200000: 1000000, 300000: 1500000 },
   highcapBridgeMin: 100000,
+  mainProductBridgeAmount: 240000,
+  mainProductBridgeMin: 100000,
 };
 
-const BASIC_TIER_BOUNDS = [50000, 100000, 200000, 300000];
+const BASIC_TIER_BOUNDS = [100000, 200000, 300000];
 
 /* --------------------------------------------------------- PURE HELPERS */
 function manwon(amountWon) {
@@ -136,60 +129,29 @@ function findCodesByName(name) {
 }
 
 /* ---------------------------------------------------------- CALCULATORS */
-function calculateGiftSmall(perf) {
-  return { achieved: perf >= AWARD_CONFIG.giftSmall.minPerf, item: AWARD_CONFIG.giftSmall.item, icon: AWARD_CONFIG.giftSmall.icon };
-}
 
-function calculateGiftTier(perf) {
-  for (const t of AWARD_CONFIG.giftTiers) {
-    if (perf >= t.min) return { achieved: true, min: t.min, item: t.item, icon: t.icon };
-  }
-  return { achieved: false, min: null, item: null, icon: null };
-}
-
-/* 기본시상: 주력상품실적은 구간 무관 항상 100%, 기타실적은 해당 구간의
-   "정액 ÷ 총실적" 실질 지급률을 적용 (2주차와 동일한 확정 공식, 새 구간/비율만 반영) */
-function calculateBasicAward(perf, mainProductPerf, isOverride) {
-  const mpPerf = Math.min(mainProductPerf || 0, perf);
-  const otherPerf = perf - mpPerf;
-
+/* 인보험 주차기본 시상 — 이번 주부터 주력상품과 완전히 분리된 정액/비율 계산 */
+function calculateBasicAward(perf, isOverride) {
   if (isOverride) {
-    return { amount: Math.round(perf * AWARD_CONFIG.basicOverrideRate), mode: "override", mainPortion: null, otherPortion: null };
+    return { amount: Math.round(perf * AWARD_CONFIG.basicOverrideRate), mode: "override" };
   }
-  if (perf < 50000) {
-    return { amount: 0, mode: "none", mainPortion: null, otherPortion: null };
+  if (perf < 100000) {
+    return { amount: 0, mode: "none" };
   }
-  let impliedRate, mode;
   if (perf >= AWARD_CONFIG.basicTopMin) {
-    impliedRate = AWARD_CONFIG.basicTopRateOther;
-    mode = "top";
-  } else {
-    const tier = AWARD_CONFIG.basicFixedTiers.find((t) => perf >= t.min && perf < t.max);
-    const fixedAmount = tier ? tier.amount : 0;
-    impliedRate = fixedAmount / perf;
-    mode = "fixed";
+    return { amount: Math.round(perf * AWARD_CONFIG.basicTopRateOther), mode: "top" };
   }
-  const mainAmt = Math.round(mpPerf * AWARD_CONFIG.basicTopRateMain);
-  const otherAmt = Math.round(otherPerf * impliedRate);
-  return { amount: mainAmt + otherAmt, mode, mainPortion: mainAmt, otherPortion: otherAmt };
+  const tier = AWARD_CONFIG.basicFixedTiers.find((t) => perf >= t.min && perf < t.max);
+  return { amount: tier ? tier.amount : 0, mode: "fixed" };
 }
 
-function calculateAmchiAward(amchiPerf) {
-  for (const t of AWARD_CONFIG.amchiTiers) {
-    if (amchiPerf >= t.min && (t.max === undefined || amchiPerf < t.max)) {
-      return { amount: t.amount, tierMin: t.min };
-    }
-  }
-  return { amount: 0, tierMin: null };
+/* 주력상품 시상 — 기본시상과 별도로 지급, 주력상품 실적 × 100% */
+function calculateMainProductAward(mainProductPerf) {
+  return { amount: Math.round((mainProductPerf || 0) * AWARD_CONFIG.mainProductRate) };
 }
 
-function calculateAmchiChickenBonus(amchiCount) {
-  return { achieved: amchiCount >= AWARD_CONFIG.amchiChickenMinCount };
-}
-
-/* 2차년도 고하이캡 브릿지 — 8월 3~5주차 + 9월 1~2주차(~11일)에 걸치는 장기 조건이라
-   아직 실제 누적 데이터가 없음. 이번 주 입력한 실적을 기준으로 "지금 이대로 유지하면
-   어느 구간인지"를 미리 보여주는 예상치이며, 최종 지급은 9월 조건까지 확인해야 함. */
+/* 2차년도 고하이캡 브릿지 — 8월 3~4주차 + 9월 1~2주차(~11일)에 걸치는 장기 조건.
+   입력한 누적 실적을 기준으로 "지금 이대로면 어느 구간인지" 미리 보여주는 예상치. */
 function calculateHighcapBridgeProjection(bridgePerf) {
   let tier = null;
   if (bridgePerf >= 300000) tier = 300000;
@@ -199,27 +161,32 @@ function calculateHighcapBridgeProjection(bridgePerf) {
   return { eligible: true, tier, amount: AWARD_CONFIG.highcapBridgeAmounts[tier] };
 }
 
-function calculateNextGoal(perf, mainProductPerf, isOverride) {
+/* 2년도 주력상품 브릿지 — 8월 4주차~마감 + 9월 1주차(~9/4) 조건. 주력상품 시상과
+   같은 "주력상품 실적" 값을 재사용. 10만원 이상이면 예상 24만원(내년 지급). */
+function calculateMainProductBridgeProjection(mainProductPerf) {
+  const eligible = (mainProductPerf || 0) >= AWARD_CONFIG.mainProductBridgeMin;
+  return { eligible, amount: eligible ? AWARD_CONFIG.mainProductBridgeAmount : 0 };
+}
+
+function calculateNextGoal(perf, isOverride) {
   if (isOverride) return null;
   const nextBound = BASIC_TIER_BOUNDS.find((b) => b > perf);
   if (!nextBound) return null;
   const gap = nextBound - perf;
-  const current = calculateBasicAward(perf, mainProductPerf, false).amount;
-  const projected = calculateBasicAward(nextBound, mainProductPerf, false).amount;
+  const current = calculateBasicAward(perf, false).amount;
+  const projected = calculateBasicAward(nextBound, false).amount;
   return { targetTier: nextBound, gap, currentAmount: current, projectedAmount: projected, delta: projected - current };
 }
 
 /* --------------------------------------------------------- ORCHESTRATOR */
-function computeAll(name, code, perf, mainProductPerf, isOverride, amchiPerf, amchiCount, highcapBridgePerf) {
-  const giftSmall = calculateGiftSmall(perf);
-  const giftTier = calculateGiftTier(perf);
-  const basic = calculateBasicAward(perf, mainProductPerf, isOverride);
-  const amchi = calculateAmchiAward(amchiPerf);
-  const amchiChicken = calculateAmchiChickenBonus(amchiCount);
+function computeAll(name, code, perf, mainProductPerf, isOverride, highcapBridgePerf) {
+  const basic = calculateBasicAward(perf, isOverride);
+  const mainProduct = calculateMainProductAward(mainProductPerf);
   const highcapProjection = calculateHighcapBridgeProjection(highcapBridgePerf);
-  const nextGoal = calculateNextGoal(perf, mainProductPerf, isOverride);
+  const mainProductBridgeProjection = calculateMainProductBridgeProjection(mainProductPerf);
+  const nextGoal = calculateNextGoal(perf, isOverride);
 
-  const securedTotal = basic.amount + amchi.amount;
+  const securedTotal = basic.amount + mainProduct.amount;
 
   return {
     name,
@@ -227,15 +194,11 @@ function computeAll(name, code, perf, mainProductPerf, isOverride, amchiPerf, am
     perf,
     mainProductPerf,
     isOverride,
-    amchiPerf,
-    amchiCount,
     highcapBridgePerf,
-    giftSmall,
-    giftTier,
     basic,
-    amchi,
-    amchiChicken,
+    mainProduct,
     highcapProjection,
+    mainProductBridgeProjection,
     nextGoal,
     securedTotal,
   };
@@ -284,8 +247,8 @@ function SectionTitle({ children }) {
   );
 }
 function TierGauge({ perf }) {
-  const boundaries = [0, 50000, 100000, 200000, 300000];
-  const labels = ["5만", "10만", "20만", "30만+"];
+  const boundaries = [0, 100000, 200000, 300000];
+  const labels = ["10만", "20만", "30만+"];
   const capPerf = Math.min(perf, 300000);
   const segments = [];
   for (let i = 0; i < boundaries.length - 1; i++) {
@@ -370,8 +333,6 @@ function InputScreen({
   perfAdditionalInput, setPerfAdditionalInput,
   mainProductInput, setMainProductInput,
   isOverride, setIsOverride,
-  amchiPerfInput, setAmchiPerfInput,
-  amchiCountInput, setAmchiCountInput,
   highcapBridgeAdditionalInput, setHighcapBridgeAdditionalInput,
   onSubmit,
 }) {
@@ -385,12 +346,8 @@ function InputScreen({
   const perfAdditional = Number(perfAdditionalInput.replace(/[^0-9]/g, "")) || 0;
   const perf = closingPerf + perfAdditional;
   const mainProductPerf = Number(mainProductInput.replace(/[^0-9]/g, "")) || 0;
-  const amchiPerf = Number(amchiPerfInput.replace(/[^0-9]/g, "")) || 0;
-  const amchiCount = Number(amchiCountInput.replace(/[^0-9]/g, "")) || 0;
   const highcapBridgeAdditional = Number(highcapBridgeAdditionalInput.replace(/[^0-9]/g, "")) || 0;
   const highcapBridgePerf = highcapClosingPerf + highcapBridgeAdditional;
-
-  const needsMainProduct = perf >= 50000;
 
   const [startedTracked, setStartedTracked] = useState(false);
   function handleNameFocus() {
@@ -413,12 +370,6 @@ function InputScreen({
   function handleMainProductChange(e) {
     setMainProductInput(e.target.value.replace(/[^0-9]/g, ""));
   }
-  function handleAmchiPerfChange(e) {
-    setAmchiPerfInput(e.target.value.replace(/[^0-9]/g, ""));
-  }
-  function handleAmchiCountChange(e) {
-    setAmchiCountInput(e.target.value.replace(/[^0-9]/g, ""));
-  }
   function handleHighcapBridgeAdditionalChange(e) {
     setHighcapBridgeAdditionalInput(e.target.value.replace(/[^0-9]/g, ""));
   }
@@ -434,7 +385,7 @@ function InputScreen({
       <div className="kb-hero">
         <Kangbugi size={72} mood="happy" />
         <h1 className="kb-title">강북이</h1>
-        <p className="kb-subtitle">강북지역단 8월 3주차 시상 가이드</p>
+        <p className="kb-subtitle">강북지역단 8월 4주차 시상 가이드</p>
       </div>
 
       <div className="kb-card kb-form">
@@ -490,24 +441,22 @@ function InputScreen({
           </p>
         </label>
 
-        {needsMainProduct && (
-          <label className="kb-field">
-            <span className="kb-field__label">
-              그중 주력상품 우대 실적 <span className="kb-field__hint">(인생의품격·굿앤굿1540·내몸엔 맞춤간편)</span>
-            </span>
-            <div className="kb-input-suffix-wrap">
-              <input
-                className="kb-input"
-                type="text"
-                inputMode="numeric"
-                placeholder="예) 160,000"
-                value={fmt(mainProductInput)}
-                onChange={handleMainProductChange}
-              />
-              <span className="kb-input-suffix">원</span>
-            </div>
-          </label>
-        )}
+        <label className="kb-field">
+          <span className="kb-field__label">
+            주력상품 실적 <span className="kb-field__hint">(내몸엔 맞춤간편·인생의품격(통합사망3천+)·굿앤굿1540)</span>
+          </span>
+          <div className="kb-input-suffix-wrap">
+            <input
+              className="kb-input"
+              type="text"
+              inputMode="numeric"
+              placeholder="예) 100,000"
+              value={fmt(mainProductInput)}
+              onChange={handleMainProductChange}
+            />
+            <span className="kb-input-suffix">원</span>
+          </div>
+        </label>
 
         <label className="kb-toggle-field">
           <span className="kb-field__label">이번 달 100만원 이상 달성했거나 당월 위촉에 참여하셨나요?</span>
@@ -518,38 +467,6 @@ function InputScreen({
             <button type="button" className={`kb-toggle-btn ${!isOverride ? "kb-toggle-btn--active" : ""}`} onClick={() => setIsOverride(false)}>
               아니요
             </button>
-          </div>
-        </label>
-
-        <div className="kb-divider" />
-
-        <label className="kb-field">
-          <span className="kb-field__label">비암치플랜 누계실적 (15일(토)~21일(금))</span>
-          <div className="kb-input-suffix-wrap">
-            <input
-              className="kb-input"
-              type="text"
-              inputMode="numeric"
-              placeholder="예) 50,000"
-              value={fmt(amchiPerfInput)}
-              onChange={handleAmchiPerfChange}
-            />
-            <span className="kb-input-suffix">원</span>
-          </div>
-        </label>
-
-        <label className="kb-field">
-          <span className="kb-field__label">비암치플랜 계약 건수 <span className="kb-field__hint">(3건 이상 시 교촌치킨)</span></span>
-          <div className="kb-input-suffix-wrap">
-            <input
-              className="kb-input"
-              type="text"
-              inputMode="numeric"
-              placeholder="예) 3"
-              value={amchiCountInput}
-              onChange={handleAmchiCountChange}
-            />
-            <span className="kb-input-suffix">건</span>
           </div>
         </label>
 
@@ -596,26 +513,16 @@ function InputScreen({
 /* =========================================================================
    COACH MESSAGE
    ========================================================================= */
-function getGiftAtTarget(targetTier) {
-  if (targetTier === 50000) return AWARD_CONFIG.giftSmall.item;
-  const t = AWARD_CONFIG.giftTiers.find((g) => g.min === targetTier);
-  return t ? t.item : null;
-}
-
-function buildChickenBonus(result) {
-  const { amchiChicken, amchiCount } = result;
-  if (amchiChicken.achieved) return null;
-  const remaining = AWARD_CONFIG.amchiChickenMinCount - amchiCount;
-  if (remaining <= 0) return null;
-  if (amchiCount === 0) {
-    return "비암치플랜 3건을 채우시면 교촌치킨 허니 한마리도 받으실 수 있어요!";
-  }
-  return `비암치플랜 ${remaining}건만 더 하시면 교촌치킨 허니 한마리를 받으실 수 있어요!`;
-}
-
 function buildCoachMessage(result) {
-  const { name, nextGoal, securedTotal, isOverride } = result;
-  const bonus = buildChickenBonus(result);
+  const { name, nextGoal, securedTotal, isOverride, mainProductBridgeProjection, mainProductPerf } = result;
+
+  let bonus = null;
+  if (!mainProductBridgeProjection.eligible && mainProductPerf > 0) {
+    const gap = AWARD_CONFIG.mainProductBridgeMin - mainProductPerf;
+    if (gap > 0) {
+      bonus = `주력상품 실적을 ${won(gap)}만 더 채우시면 주력상품 브릿지(내년 24만원)도 받으실 수 있어요!`;
+    }
+  }
 
   if (isOverride) {
     return {
@@ -632,14 +539,9 @@ function buildCoachMessage(result) {
     };
   }
 
-  const gift = getGiftAtTarget(nextGoal.targetTier);
-  const detail = gift
-    ? `여기까지 채우시면 기본시상이 ${manwonGain(nextGoal.delta)}이 더 늘어나고, ${gift}도 받으실 수 있어요!`
-    : `여기까지 채우시면 기본시상이 ${manwonGain(nextGoal.delta)}이 더 늘어나요.`;
-
   return {
     main: `${name}님, ${manwon(nextGoal.targetTier)} 구간까지 ${won(nextGoal.gap)} 남았어요.`,
-    detail,
+    detail: `여기까지 채우시면 기본시상이 ${manwonGain(nextGoal.delta)}이 더 늘어나요.`,
     bonus,
   };
 }
@@ -694,15 +596,12 @@ function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
 }
 
 async function generateShareImage(result) {
-  const { name, securedTotal, basic, amchi, amchiChicken, giftSmall, giftTier } = result;
+  const { name, securedTotal, basic, mainProduct } = result;
   const items = [];
   if (basic.amount > 0) items.push({ label: "💰 기본시상", amount: basic.amount });
-  if (amchi.amount > 0) items.push({ label: "🩺 비암치플랜", amount: amchi.amount });
+  if (mainProduct.amount > 0) items.push({ label: "🎯 주력상품 시상", amount: mainProduct.amount });
 
   const gifts = [];
-  if (giftSmall.achieved) gifts.push(giftSmall.item);
-  if (giftTier.achieved) gifts.push(giftTier.item);
-  if (amchiChicken.achieved) gifts.push("교촌치킨 허니 한마리");
 
   try {
     if (document.fonts) {
@@ -745,7 +644,7 @@ async function generateShareImage(result) {
   ctx.fillText("강북이", pad + 52, y + 18);
   ctx.fillStyle = "#8A8580";
   ctx.font = "600 12px 'Noto Sans KR'";
-  ctx.fillText("강북지역단 8월 3주차 시상 가이드", pad + 52, y + 36);
+  ctx.fillText("강북지역단 8월 4주차 시상 가이드", pad + 52, y + 36);
 
   y += 70;
   ctx.fillStyle = "#2B2A28";
@@ -830,15 +729,14 @@ async function generateShareImage(result) {
    RESULT SCREEN
    ========================================================================= */
 function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster, onOpenPastResults }) {
-  const { name, code, basic, amchi, amchiChicken, giftSmall, giftTier, highcapProjection, highcapBridgePerf, nextGoal, securedTotal, isOverride } = result;
+  const { name, code, basic, mainProduct, highcapProjection, highcapBridgePerf, mainProductBridgeProjection, mainProductPerf, nextGoal, securedTotal, isOverride } = result;
   const [saving, setSaving] = useState(false);
 
   const breakdownItems = [];
   if (basic.amount > 0) breakdownItems.push({ label: "💰 기본시상", amount: basic.amount });
-  if (amchi.amount > 0) breakdownItems.push({ label: "🩺 비암치플랜", amount: amchi.amount });
+  if (mainProduct.amount > 0) breakdownItems.push({ label: "🎯 주력상품 시상", amount: mainProduct.amount });
 
   const coach = buildCoachMessage(result);
-  const hasGifts = giftSmall.achieved || giftTier.achieved || amchiChicken.achieved;
 
   async function handleSaveImage() {
     track("save_image_click");
@@ -864,7 +762,7 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster, onOp
   async function handleKakaoShare() {
     track("kakao_share_click");
     const shareData = {
-      title: "강북이 | 8월 3주차 시상 가이드",
+      title: "강북이 | 8월 4주차 시상 가이드",
       text: "이번 주 예상 시상금, 강북이한테 바로 확인해보세요!",
       url: window.location.href,
     };
@@ -925,40 +823,6 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster, onOp
         )}
       </div>
 
-      {/* 사은품 */}
-      {hasGifts && (
-        <div className="kb-card kb-gifts">
-          <SectionTitle>이번 주 사은품</SectionTitle>
-          {giftSmall.achieved && (
-            <div className="kb-gift-row">
-              <span className="kb-gift-row__icon">{giftSmall.icon}</span>
-              <div>
-                <p className="kb-gift-row__title">인보험 5만원 참여</p>
-                <p className="kb-gift-row__item">{giftSmall.item}</p>
-              </div>
-            </div>
-          )}
-          {giftTier.achieved && (
-            <div className="kb-gift-row">
-              <span className="kb-gift-row__icon">{giftTier.icon}</span>
-              <div>
-                <p className="kb-gift-row__title">{manwon(giftTier.min)} 이상 구간</p>
-                <p className="kb-gift-row__item">{giftTier.item}</p>
-              </div>
-            </div>
-          )}
-          {amchiChicken.achieved && (
-            <div className="kb-gift-row">
-              <span className="kb-gift-row__icon">🍗</span>
-              <div>
-                <p className="kb-gift-row__title">비암치플랜 3건 이상</p>
-                <p className="kb-gift-row__item">교촌치킨 허니 한마리</p>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
       {/* 실적 구간 게이지 */}
       <div className="kb-card">
         <SectionTitle>{name}님의 실적 구간</SectionTitle>
@@ -1003,27 +867,9 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster, onOp
 
       <div className="kb-detail-card">
         <div className="kb-detail-card__head">
-          <span>🍂 가을맞이 특별 이벤트</span>
-          <span className="kb-detail-card__amount">{hasGifts && (giftSmall.achieved || giftTier.achieved) ? "사은품 확정" : "-"}</span>
-        </div>
-        <p className="kb-detail-card__row">
-          {giftSmall.achieved ? `${giftSmall.item} (5만원 참여 전원 지급)` : "5만원 이상 참여 시 전원 증정"}
-        </p>
-        {giftTier.achieved ? (
-          <p className="kb-detail-card__row kb-detail-card__row--good">{manwon(giftTier.min)} 구간 달성 → {giftTier.item} 추가 증정</p>
-        ) : (
-          <p className="kb-detail-card__row kb-detail-card__row--muted">10만원 이상 달성 시 구간별 사은품이 추가돼요.</p>
-        )}
-      </div>
-
-      <div className="kb-detail-card">
-        <div className="kb-detail-card__head">
-          <span>💰 기본 시상 {isOverride && <Chip tone="orange">100% 적용</Chip>}</span>
+          <span>💰 인보험 주차기본 시상 {isOverride && <Chip tone="orange">100% 적용</Chip>}</span>
           <span className="kb-detail-card__amount">{manwon(basic.amount)}</span>
         </div>
-        {basic.mainPortion > 0 && (
-          <p className="kb-detail-card__row">주력상품 {manwon(basic.mainPortion)} + 기타 {manwon(basic.otherPortion)}</p>
-        )}
         {!isOverride && nextGoal && (
           <p className="kb-detail-card__row kb-detail-card__row--muted">
             {manwon(nextGoal.targetTier)} 구간까지 {won(nextGoal.gap)}만 더하면 {manwonGain(nextGoal.delta)}를 추가로 얻어요.
@@ -1033,15 +879,11 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster, onOp
 
       <div className="kb-detail-card">
         <div className="kb-detail-card__head">
-          <span>🩺 비암치플랜 특별시상</span>
-          <span className="kb-detail-card__amount">{manwon(amchi.amount)}</span>
+          <span>🎯 주력상품 시상</span>
+          <span className="kb-detail-card__amount">{manwon(mainProduct.amount)}</span>
         </div>
-        <p className="kb-detail-card__row">비암치플랜 누계실적 {won(result.amchiPerf)}</p>
-        <p className="kb-detail-card__row" style={{ color: amchiChicken.achieved ? "var(--kb-orange-dark)" : undefined, fontWeight: amchiChicken.achieved ? 700 : undefined }}>
-          {amchiChicken.achieved
-            ? "🍗 3건 이상 달성 — 교촌치킨 허니 한마리 확정!"
-            : `계약 ${result.amchiCount}건 (3건 이상 달성 시 교촌치킨 증정)`}
-        </p>
+        <p className="kb-detail-card__row">주력상품 실적 {won(mainProductPerf)} × 100%</p>
+        <p className="kb-detail-card__row kb-detail-card__row--tiny">내몸엔 맞춤간편·인생의품격(통합사망3천+)·굿앤굿1540, 기본시상과 별도 지급</p>
       </div>
 
       <div className="kb-detail-card">
@@ -1062,7 +904,28 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster, onOp
           <p className="kb-detail-card__row kb-detail-card__row--muted">10만원 이상부터 브릿지 구간이 시작돼요.</p>
         )}
         <p className="kb-detail-card__row kb-detail-card__row--tiny">
-          ※ 8월 3~5주차 누적 실적 기준 예상치이며, 9월 조건까지 확인해야 최종 확정돼요.
+          ※ 8월 3~4주차 누적 실적 기준 예상치이며, 9월 조건까지 확인해야 최종 확정돼요.
+        </p>
+      </div>
+
+      <div className="kb-detail-card">
+        <div className="kb-detail-card__head">
+          <span>🎁 주력상품 브릿지 (예상)</span>
+          <span className="kb-detail-card__amount">
+            {mainProductBridgeProjection.eligible && <Chip tone="muted">내년 지급</Chip>}
+            {mainProductBridgeProjection.eligible ? manwon(mainProductBridgeProjection.amount) : "-"}
+          </span>
+        </div>
+        <p className="kb-detail-card__row">주력상품 실적 {won(mainProductPerf)}</p>
+        {mainProductBridgeProjection.eligible ? (
+          <p className="kb-detail-card__row kb-detail-card__row--good">
+            지금 이대로면 9월 1주차(~9/4)까지 10만원 이상 유지 시 내년에 {manwon(mainProductBridgeProjection.amount)}를 받으실 수 있어요.
+          </p>
+        ) : (
+          <p className="kb-detail-card__row kb-detail-card__row--muted">10만원 이상부터 브릿지 대상이에요.</p>
+        )}
+        <p className="kb-detail-card__row kb-detail-card__row--tiny">
+          ※ 8월 4주차~마감 + 9월 1주차(~9/4) 조건을 모두 채워야 최종 확정돼요.
         </p>
       </div>
 
@@ -1071,18 +934,25 @@ function ResultScreen({ result, onRecalculate, onOpenGallery, onOpenPoster, onOp
         <SectionTitle>{name}님의 전체 시상 현황</SectionTitle>
         <div className="kb-board__grid">
           <span className="kb-board__name">💰 기본 시상</span>
-          <span className="kb-board__meta">{isOverride ? "100% 적용" : basic.mainPortion > 0 ? "주력상품 혼합" : "구간 정액"}</span>
+          <span className="kb-board__meta">{isOverride ? "100% 적용" : "구간 정액"}</span>
           <span className="kb-board__amt">{manwon(basic.amount)}</span>
 
-          <span className="kb-board__name">🩺 비암치플랜</span>
-          <span className="kb-board__meta">{amchiChicken.achieved ? "3건+ 달성" : `${result.amchiCount}건`}</span>
-          <span className="kb-board__amt">{manwon(amchi.amount)}</span>
+          <span className="kb-board__name">🎯 주력상품 시상</span>
+          <span className="kb-board__meta">실적 × 100%</span>
+          <span className="kb-board__amt">{manwon(mainProduct.amount)}</span>
 
           <span className="kb-board__name">🌉 고하이캡 브릿지</span>
           <span className="kb-board__meta">{highcapProjection.eligible ? "예상 구간" : "대상 아님"}</span>
           <span className="kb-board__amt">
             {highcapProjection.eligible && <span className="kb-board__tag">내년 지급</span>}
             {highcapProjection.eligible ? manwon(highcapProjection.amount) : "0원"}
+          </span>
+
+          <span className="kb-board__name">🎁 주력상품 브릿지</span>
+          <span className="kb-board__meta">{mainProductBridgeProjection.eligible ? "예상 달성" : "대상 아님"}</span>
+          <span className="kb-board__amt">
+            {mainProductBridgeProjection.eligible && <span className="kb-board__tag">내년 지급</span>}
+            {mainProductBridgeProjection.eligible ? manwon(mainProductBridgeProjection.amount) : "0원"}
           </span>
         </div>
 
@@ -1248,8 +1118,6 @@ function KangbukApp() {
   const [perfAdditionalInput, setPerfAdditionalInput] = useState("");
   const [mainProductInput, setMainProductInput] = useState("");
   const [isOverride, setIsOverride] = useState(false);
-  const [amchiPerfInput, setAmchiPerfInput] = useState("");
-  const [amchiCountInput, setAmchiCountInput] = useState("");
   const [highcapBridgeAdditionalInput, setHighcapBridgeAdditionalInput] = useState("");
 
   useEffect(() => {
@@ -1270,13 +1138,11 @@ function KangbukApp() {
     const perfAdditional = Number(perfAdditionalInput.replace(/[^0-9]/g, "")) || 0;
     const perf = getClosingPerf(resolvedCode) + perfAdditional;
     const mainProductPerf = Number(mainProductInput.replace(/[^0-9]/g, "")) || 0;
-    const amchiPerf = Number(amchiPerfInput.replace(/[^0-9]/g, "")) || 0;
-    const amchiCount = Number(amchiCountInput.replace(/[^0-9]/g, "")) || 0;
     const highcapBridgeAdditional = Number(highcapBridgeAdditionalInput.replace(/[^0-9]/g, "")) || 0;
     const highcapBridgePerf = getHighcapBridgeClosingPerf(resolvedCode) + highcapBridgeAdditional;
 
-    return computeAll(name.trim(), resolvedCode, perf, mainProductPerf, isOverride, amchiPerf, amchiCount, highcapBridgePerf);
-  }, [screen, name, code, perfAdditionalInput, mainProductInput, isOverride, amchiPerfInput, amchiCountInput, highcapBridgeAdditionalInput]);
+    return computeAll(name.trim(), resolvedCode, perf, mainProductPerf, isOverride, highcapBridgePerf);
+  }, [screen, name, code, perfAdditionalInput, mainProductInput, isOverride, highcapBridgeAdditionalInput]);
 
   function handleSubmit() {
     setScreen("result");
@@ -1316,8 +1182,6 @@ function KangbukApp() {
           perfAdditionalInput={perfAdditionalInput} setPerfAdditionalInput={setPerfAdditionalInput}
           mainProductInput={mainProductInput} setMainProductInput={setMainProductInput}
           isOverride={isOverride} setIsOverride={setIsOverride}
-          amchiPerfInput={amchiPerfInput} setAmchiPerfInput={setAmchiPerfInput}
-          amchiCountInput={amchiCountInput} setAmchiCountInput={setAmchiCountInput}
           highcapBridgeAdditionalInput={highcapBridgeAdditionalInput} setHighcapBridgeAdditionalInput={setHighcapBridgeAdditionalInput}
           onSubmit={handleSubmit}
         />
@@ -1416,12 +1280,6 @@ const CSS = `
 .kb-breakdown__right { display: flex; align-items: center; gap: 6px; }
 .kb-breakdown-empty { color: #E6E1D8; font-size: 15px; margin: 10px 0 0; }
 
-.kb-gifts { background: var(--kb-orange-soft); border: none; }
-.kb-gift-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-top: 1px dashed rgba(198,80,26,0.25); }
-.kb-gift-row:first-of-type { border-top: none; }
-.kb-gift-row__icon { font-size: 26px; line-height: 1; }
-.kb-gift-row__title { font-size: 13.5px; font-weight: 700; color: var(--kb-orange-dark); margin: 0 0 3px; }
-.kb-gift-row__item { font-size: 15px; font-weight: 600; color: var(--kb-ink); margin: 0; line-height: 1.4; }
 
 .kb-recommend { background: var(--kb-orange-soft); border: none; }
 .kb-recommend__head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
