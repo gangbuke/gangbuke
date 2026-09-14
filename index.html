@@ -337,7 +337,16 @@ function PosterModal({ file, onClose }) {
 
 /* 이번 주 마감실적 안내 — 이름/코드 입력 시 바로 아래 표시 */
 function ClosingPerfBox({ code }) {
+  const dataAvailable = Object.keys(WEEKLY_CLOSING_PERF).length > 0;
   const amount = getClosingPerf(code);
+  if (!dataAvailable) {
+    return (
+      <div className="kb-closing-perf">
+        <span className="kb-closing-perf__label">이번 주 마감실적</span>
+        <span className="kb-closing-perf__note">아직 마감 데이터가 업데이트되지 않았어요. 지금까지 하신 실적 전부를 아래 입력창에 입력해주세요!</span>
+      </div>
+    );
+  }
   return (
     <div className="kb-closing-perf">
       <span className="kb-closing-perf__label">이번 주 마감실적</span>
@@ -467,7 +476,9 @@ function InputScreen({
         <label className="kb-field">
           <span className="kb-field__label">이번 주 인보험 실적 <span className="kb-field__hint">({WEEKLY_PERIOD_LABEL})</span></span>
           <p className="kb-field__baseline">
-            {WEEKLY_CLOSING_LABEL} <strong>{won(closingPerf)}</strong>인데, 여기서 추가로 얼마나 더 하실 건가요?
+            {Object.keys(WEEKLY_CLOSING_PERF).length > 0
+              ? <>{WEEKLY_CLOSING_LABEL} <strong>{won(closingPerf)}</strong>인데, 여기서 추가로 얼마나 더 하실 건가요?</>
+              : <>아직 마감 데이터가 없어서, 지금까지 하신 실적을 전부 입력해주세요.</>}
           </p>
           <div className="kb-input-suffix-wrap">
             <input
@@ -549,7 +560,9 @@ function InputScreen({
             고하이캡 브릿지 관련 실적 <span className="kb-field__hint">(장기하이캡 17배 이상 계약)</span>
           </span>
           <p className="kb-field__baseline">
-            {HIGHCAP_BRIDGE_CLOSING_LABEL} <strong>{won(highcapClosingPerf)}</strong>인데, 여기서 추가로 얼마나 더 하실 건가요?
+            {Object.keys(HIGHCAP_BRIDGE_CLOSING_PERF).length > 0
+              ? <>{HIGHCAP_BRIDGE_CLOSING_LABEL} <strong>{won(highcapClosingPerf)}</strong>인데, 여기서 추가로 얼마나 더 하실 건가요?</>
+              : <>아직 마감 데이터가 없어서, 지금까지 하신 실적을 전부 입력해주세요.</>}
           </p>
           <div className="kb-input-suffix-wrap">
             <input
@@ -1383,6 +1396,7 @@ const CSS = `
   position: relative;
 }
 .kb-app *, .kb-app *::before, .kb-app *::after { box-sizing: border-box; }
+.kb-app { word-break: keep-all; overflow-wrap: break-word; }
 
 .kb-screen { max-width: 480px; margin: 0 auto; padding: 28px 18px 40px; display: flex; flex-direction: column; gap: 16px; }
 
