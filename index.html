@@ -66,7 +66,7 @@ const ROSTER = [{"code":"1B7072","name":"정은선"},{"code":"1C8337","name":"�
 /* 10월 4주차 마감실적 (데이터 예정) */
 const WEEKLY_CLOSING_PERF = {}; // code -> 원 (10월 4주차 새 기간, 데이터 예정)
 const WEEKLY_CLOSING_LABEL = "마감 데이터 업데이트 예정";
-const WEEKLY_PERIOD_LABEL = "10월 4주차(10/17(토)~23(금))"; // 매주 이 한 줄만 바꾸면 화면 전체에 반영됨
+const WEEKLY_PERIOD_LABEL = "10월 4주차"; // 매주 이 한 줄만 바꾸면 화면 전체에 반영됨
 
 function getClosingPerf(code) {
   return code && WEEKLY_CLOSING_PERF[code] !== undefined ? WEEKLY_CLOSING_PERF[code] : 0;
